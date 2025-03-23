@@ -1,0 +1,170 @@
+@font-face {
+    font-family: "Nunito";
+    src: url("../fonts/Nunito-ExtraLight.ttf") format("truetype");
+    font-weight: 200;
+}
+
+@font-face {
+    font-family: "Nunito";
+    src: url("../fonts/Nunito-Light.ttf") format("truetype");
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: "Nunito";
+    src: url("../fonts/Nunito-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Nunito";
+    src: url("../fonts/Nunito-Medium.ttf") format("truetype");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Nunito";
+    src: url("../fonts/Nunito-SemiBold.ttf") format("truetype");
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "Nunito";
+    src: url("../fonts/Nunito-Bold.ttf") format("truetype");
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Nunito";
+    src: url("../fonts/Nunito-ExtraBold.ttf") format("truetype");
+    font-weight: 800;
+}
+
+@font-face {
+    font-family: "Nunito";
+    src: url("../fonts/Nunito-Black.ttf") format("truetype");
+    font-weight: 900;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Nunito", serif;
+    
+}
+
+header {
+    background-color: orange;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+}
+
+h1, h3 {
+    display: flex;
+    justify-content: center;
+}
+
+header a {
+    text-decoration: none;
+    color: black;
+    transition: 0.5s;
+}
+
+header a:hover {
+    color: #9B6500;
+}
+
+.logoutButton {
+    font-size: 20px;
+    border: none;
+    background-color: orange;
+}
+
+.logoutButton:hover {
+    color: #9B6500;
+}
+
+.logo {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+}
+
+.logo a {
+    font-size: 30px;
+    padding: 10px;
+    font-weight: 700;
+}
+
+.menu {
+    width: 55%;
+    color: black;
+    font-size: 21px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.menu a {
+    margin-right: 30px;
+    font-size: 22px;
+}
+
+.auth-box {
+    width: 15%;
+    display: flex;
+    justify-content: center;
+}
+
+.auth-box a {
+    font-size: 21px;
+}
+
+.auth-box a:first-child {
+    margin-right: 10px;
+}
+
+.main-content {
+    margin-top: 20px;
+    min-height: calc(100vh - (20px + 50px + 100px));
+}
+
+.main-cnt {
+    display: flex;
+    margin-top: 50px;
+    justify-content: space-around;
+}
+
+.important-content {
+    display: flex;
+    width: 65%;
+    height: 350px;
+    justify-content: center;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 19px -3px rgba(0,0,0,0.5);
+}
+
+.navigation {
+    display: flex;
+    width: 20%;
+    height: 350px;
+    justify-content: center;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 19px -3px rgba(0,0,0,0.5);
+}
+
+footer {
+    height: 50px;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    font-weight: 200;
+}

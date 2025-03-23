@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block menu %}
+    {% include 'programmer/menu.html' %}
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h1>Привет, фрилансер {{ user.first_name }} {{ user.last_name }}</h1>
+
+        {% if not has_portfolio %}
+            <div class="centered">
+                <div class="p-home">
+                    <h3>Чтобы начать выполнять заказы, заполните портфолио.</h3>
+                    <div class="p-btn-cnt">
+                        <a href="{% url 'programmer:portfolio_create' %}">Заполнить портфолио</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+        {% endif %}
+    {% endif %}
+{% endblock %}

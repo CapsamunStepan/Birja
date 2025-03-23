@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/programmer.css' %}">
+    <link rel="icon" href="{% static 'image/favicon/favicon.png' %}">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <a href="{% url 'home:home' %}">IT Birja</a>
+    </div>
+    <div class="menu">
+        {% block menu %} {% endblock %}
+    </div>
+    <div class="auth-box">
+        {% if user.is_authenticated %}
+            {% block profile_link %}
+
+            {% endblock %}
+            <form method="post" action="{% url 'home:logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="logoutButton">Выход</button>
+            </form>
+        {% else %}
+            <a href="{% url 'home:login' %}">Войти</a>
+            <a href="{% url 'home:register' %}">Регистрация</a>
+        {% endif %}
+    </div>
+</header>
+
+<div class="main-content">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<footer>
+    <p>&copy; <span id="current-year"></span> IT Birja. Все права защищены.</p>
+</footer>
+
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
