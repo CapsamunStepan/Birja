@@ -5,7 +5,7 @@ from django.conf import settings
 class Portfolio(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE, default=None)
-    image = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to='images/', blank=True)
     github = models.URLField(blank=True)
     introduction = models.TextField(blank=True)
 

@@ -1,21 +1,42 @@
 {% extends 'base.html' %}
 
-{% block title %}Главная{% endblock %}
+{% block title %}Портфолио{% endblock %}
 
 {% block menu %}
     {% include 'programmer/menu.html' %}
 {% endblock %}
 
 {% block content %}
-    <h1>Главная страница</h1>
-    {% if user.is_authenticated %}
-    <div class="main-cnt">
-        <div class="important-content">
-            <h3>Привет {{ user.first_name }}</h3>
-        </div>
-        <div class="navigation">
-            <h3>Navigation</h3>
+    <h2>Портфолио</h2>
+
+    <div class="portfolio">
+        <div class="info-container">
+            <div class="info-description">
+                <div class="description-container">
+                    <h3>Фамилия Имя:</h3>
+                    <p class="info">{{ user.last_name }} {{ user.first_name }}</p>
+                    <h3>Github:</h3>
+                    <p class="info">
+                        <a href="{{ portfolio.github }}" target="_blank">{{ portfolio.github }}</a>
+                    </p>
+                    <h3>О себе:</h3>
+                    <p class="info">{{ portfolio.introduction }}</p>
+                    <h3>Образование/Курсы:</h3>
+                    <p class="info">{{ portfolio.education_or_courses }}</p>
+                    <h3>Качества:</h3>
+                    <p class="info">{{ portfolio.qualities }}</p>
+                    <h3>Навыки:</h3>
+                    <p class="info">{{ portfolio.skills }}</p>
+                    <div class="edit-btn">
+                        <a href="{% url 'programmer:portfolio_edit' %}">Редактировать Портфолио</a>
+                    </div>
+
+                </div>
+                <div class="image-container">
+                    <img src="{{ portfolio.image.url }}" alt="photo">
+                </div>
+            </div>
         </div>
     </div>
-    {% endif %}
+
 {% endblock %}
