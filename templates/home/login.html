@@ -12,11 +12,7 @@
 </head>
 <body>
 
-<div class="centered">
-    <div class="auth-h">
-        <div class="txt"><a href="{% url 'home:home' %}"><-</a>Вход</div>
-    </div>
-</div>
+<h1 class="auth-label">Вход</h1>
 
 <div class="form-container">
     <form method="post" class="form">
@@ -24,7 +20,7 @@
 
         <!-- Поле Email (username) -->
         <div class="flex-column">
-            <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+            <label for="{{ form.username.id_for_label }}">Логин:</label>
         </div>
         <div class="inputForm">
             <svg height="20" viewBox="0 0 32 32" width="20" xmlns="http://www.w3.org/2000/svg">
@@ -40,7 +36,7 @@
 
         <!-- Поле Password -->
         <div class="flex-column">
-            <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+            <label for="{{ form.password.id_for_label }}">Пароль:</label>
         </div>
         <div class="inputForm">
             <svg height="20" viewBox="-64 0 512 512" width="20" xmlns="http://www.w3.org/2000/svg">
@@ -57,16 +53,18 @@
         <div class="flex-row">
             <div>
                 <input type="checkbox" name="remember_me" id="remember_me">
-                <label for="remember_me">Remember me</label>
+                <label for="remember_me" class="remember-me">Запомнить меня</label>
             </div>
-            <span class="span">Forgot password?</span>
+            <span class="span"><a href="#">Забыли пароль?</a></span>
         </div>
 
         <!-- Кнопка входа -->
-        <button type="submit" class="button-submit">Sign In</button>
+        <button type="submit" class="button-submit">Войти</button>
 
-        <p class="p">Don't have an account? <span class="span">Sign Up</span></p>
-        <p class="p line">Or With</p>
+        <p class="p">Нет аккаунта? 
+            <span class="span"><a href="{% url 'home:register' %}">Зарегистрироваться</a></span>
+        </p>
+        <p class="p line">Или</p>
 
         <!-- Кнопка входа через Google -->
         <div class="flex-row">
@@ -86,6 +84,8 @@
                 Google
             </button>
         </div>
+
+        <a class="cancel-button" href="{% url 'home:home' %}">Отмена</a>
     </form>
 </div>
 

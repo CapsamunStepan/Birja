@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block menu %}
+    {% include 'programmer/menu.html' %}
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h1>Привет, заказчик {{ user.first_name }} {{ user.last_name }}</h1>
+    {% endif %}
+{% endblock %}

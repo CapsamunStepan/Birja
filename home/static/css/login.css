@@ -1,15 +1,19 @@
-/* From Uiverse.io by micaelgomestavares */
+body {
+    background: rgb(166, 166, 166);
+}
+
 .form-container {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-bottom: 40px;
 }
 
 .form {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background-color: #ffffff;
+    background-color: #f6f6f6;
     padding: 30px;
     width: 450px;
     border-radius: 20px;
@@ -30,7 +34,7 @@
 }
 
 .inputForm {
-    border: 1.5px solid #ecedec;
+    border: 2px solid #d1d1d1;
     border-radius: 10px;
     height: 50px;
     display: flex;
@@ -52,7 +56,7 @@
 }
 
 .inputForm:focus-within {
-    border: 1.5px solid #2d79f3;
+    border: 2px solid #2d79f3;
 }
 
 .flex-row {
@@ -69,15 +73,15 @@
     font-weight: 400;
 }
 
-.span {
+.span a {
     font-size: 14px;
     margin-left: 5px;
     color: #2d79f3;
-    font-weight: 500;
-    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
 }
 
-.button-submit {
+.button-submit, .cancel-button {
     margin: 20px 0 10px 0;
     background-color: #151717;
     border: none;
@@ -90,7 +94,7 @@
     cursor: pointer;
 }
 
-.button-submit:hover {
+.button-submit:hover, .cancel-button:hover {
     background-color: #252727;
 }
 
@@ -111,53 +115,28 @@
     align-items: center;
     font-weight: 500;
     gap: 10px;
-    border: 1px solid #ededef;
-    background-color: white;
+    border: 2px solid #d1d1d1;
+    background-color: #fafafa;
     cursor: pointer;
     transition: 0.2s ease-in-out;
 }
 
 .btn:hover {
-    border: 1px solid #2d79f3;;
+    border: 2px solid #2d79f3;;
 }
 
-#id_username, #id_password {
+#id_username, #id_password, #id_first_name, #id_last_name, #id_email, #id_password2 {
     width: 400px;
     border: none;
     height: 45px;
     margin-left: 5px;
     border-radius: 5px;
     padding-left: 10px;
+    font-size: 17px;
 }
 
-#id_username:focus, #id_password:focus {
+#id_username:focus, #id_password:focus, #id_first_name:focus, #id_last_name:focus, #id_email, #id_password2:focus {
     outline: none;
-}
-
-.auth-h {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 24px;
-    margin-top: 50px;
-    font-weight: 500;
-    display: flex;
-    justify-content: center;
-}
-
-.auth-h a {
-    text-decoration: none;
-    color: black;
-    font-size: 30px;
-    font-weight: bold;
-    margin-left: -225px;
-    padding: 0 5px;
-    margin-right: 20px;
-}
-
-.auth-h a:hover {
-    border: 2px solid black;
-    border-radius: 5px;
-    margin-right: 17px;
-
 }
 
 .centered {
@@ -165,6 +144,30 @@
     justify-content: center;
 }
 
+.cancel-button {
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.auth-label {
+    margin-top: 30px;
+}
 
+#id_group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
 
+.id-group-item {
+    margin: 10px;
+}
+
+.category-label {
+    font-size: 17px;
+    font-weight: 600;
+}

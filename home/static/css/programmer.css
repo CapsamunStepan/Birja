@@ -114,7 +114,7 @@
 
     .info-container {
         background: white;
-        margin: 50px 0;
+        margin: 20px 0 50px 0;
         width: 80%;
         height: auto;
         padding: 50px;
@@ -127,14 +127,19 @@
         justify-content: space-between;
     }
 
+    .outer-img-cnt {
+        width: 50%;
+        display: flex;
+        justify-content: right;
+        align-items: center;
+    }
+
     .image-container {
-        width: 300px;
-        height: 300px;
+        width: 350px;
+        height: 350px;
         position: relative;
         overflow: hidden;
         border-radius: 5%;
-        margin-top: 20px;
-        margin-left: 20px;
     }
 
     img {
@@ -161,17 +166,23 @@
 
     .edit-btn {
         margin-top: 50px;
-        margin-left: 10px;
+        margin-left: 5px;
 
         a {
-            color: #46394B;
+            color: orange;
             border-radius: 5px;
             font-size: 21px;
+            font-weight: 700;
             text-decoration: None;
             text-transform: uppercase;
             padding: 10px 20px;
             transition: 0.3s;
-            box-shadow: 0 5px 10px rgba(70, 57, 75, 0.7);
+            box-shadow: 0 5px 10px rgba(225, 165, 0, 0.7);
+        }
+
+        a:hover {
+            color: white;
+            background-color: orange;
         }
     }
 
