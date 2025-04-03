@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Программисты{% endblock %}
+
+{% block menu %}
+    {% include 'customer/menu.html' %}
+{% endblock %}
+
+{% block content %}
+    <h1>Портфолио программистов</h1>
+    {% if portfolios %}
+        {% for portfolio in portfolios %}
+            <div class="portfolio">
+                <div class="info-container">
+                    <div class="info-description">
+                        <div class="description-container">
+                            <h3>Фамилия Имя:</h3>
+                            <p class="info">{{ portfolio.user.last_name }} {{ portfolio.user.first_name }}</p>
+                            <h3>Github:</h3>
+                            <p class="info">
+                                <a href="{{ portfolio.github }}" target="_blank">{{ portfolio.github }}</a>
+                            </p>
+                            <h3>О себе:</h3>
+                            <p class="info">{{ portfolio.introduction }}</p>
+                            <h3>Образование/Курсы:</h3>
+                            <p class="info">{{ portfolio.education_or_courses }}</p>
+                            <h3>Качества:</h3>
+                            <p class="info">{{ portfolio.qualities }}</p>
+                            <h3>Навыки:</h3>
+                            <p class="info">{{ portfolio.skills }}</p>
+
+                        </div>
+                        <div class="outer-img-cnt">
+                            <div class="image-container">
+                                <img src="{{ portfolio.image.url }}" alt="photo">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Нет ни одного программиста на платформе...</p>
+    {% endif %}
+{% endblock %}

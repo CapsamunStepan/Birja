@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Мои Заказы{% endblock %}
+
+{% block menu %}
+    {% include 'customer/menu.html' %}
+{% endblock %}
+
+{% block content %}
+    <h1>Мои заказы</h1>
+    {% for order in orders %}
+        {{ order.title }}
+    {% empty %}
+        <p>Вы не создали ни одного заказа</p>
+    {% endfor %}
+{% endblock %}

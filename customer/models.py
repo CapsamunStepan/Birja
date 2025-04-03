@@ -18,7 +18,7 @@ class Order(models.Model):
         ('other', 'Другое'),
     ]
     title = models.CharField(max_length=250)
-    full_subscription = models.TextField()
+    full_description = models.TextField()
     price = models.IntegerField(default=0)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='customer_orders')
@@ -27,7 +27,7 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     taken = models.DateTimeField(null=True, blank=True)
-    deadline = models.DateTimeField(null=True, blank=True)
+    deadline = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.title} + {self.author}"

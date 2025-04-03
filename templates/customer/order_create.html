@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Создание заказа{% endblock %}
+
+{% block menu %}
+    {% include 'customer/menu.html' %}
+{% endblock %}
+
+{% block content %}
+    <h1>Создание заказа</h1>
+    <div class="create-order-cnt">
+        <form method="post" enctype="multipart/form-data">
+            <div class="flex-column">
+                <label for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+            </div>
+            <div class="inputForm">
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <div class="error">{{ form.title.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="flex-column">
+                <label for="{{ form.full_description.id_for_label }}">{{ form.full_description.label }}</label>
+            </div>
+            <div class="inputFormTextarea">
+                {{ form.full_description }}
+                {% if form.full_description.errors %}
+                    <div class="error">{{ form.full_description.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="flex-column">
+                <label for="{{ form.price.id_for_label }}">{{ form.price.label }}</label>
+            </div>
+            <div class="inputForm">
+                {{ form.price }}
+                <div class="currency">MDL</div>
+                {% if form.price.errors %}
+                    <div class="error">{{ form.price.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="flex-column">
+                <label for="{{ form.category.id_for_label }}">{{ form.category.label }}</label>
+            </div>
+            <div class="inputForm">
+                {{ form.category }}
+                {% if form.category.errors %}
+                    <div class="error">{{ form.category.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="flex-column">
+                <label for="{{ form.deadline.id_for_label }}">{{ form.deadline.label }}</label>
+            </div>
+            <div class="inputForm">
+                {{ form.deadline }}
+                {% if form.deadline.errors %}
+                    <div class="error">{{ form.deadline.errors }}</div>
+                {% endif %}
+            </div>
+            {% csrf_token %}
+            <button type="submit" class="button-create-order">Оформить заказ</button>
+        </form>
+    </div>
+{% endblock %}

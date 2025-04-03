@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, UserRegistrationForm
 from django.contrib.auth.models import Group
 from django.http import HttpResponse
@@ -12,6 +12,7 @@ def home(request):
     elif request.user.groups.filter(name='Заказчик').exists():
         return redirect(to='customer:customer_home')
     else:
+        logout(request)
         return render(request, 'home/home.html')
 
 

@@ -1,0 +1,151 @@
+.create-order-cnt {
+    display: flex;
+    justify-content: center;
+    /*margin: 30px;*/
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #f6f6f6;
+    padding: 30px;
+    width: 450px;
+    border-radius: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+::placeholder {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.form button {
+    align-self: flex-end;
+}
+
+.flex-column {
+    margin-top: 16px;
+}
+
+.flex-column > label {
+    color: #151717;
+    font-weight: 600;
+}
+
+.inputForm {
+    border: 2px solid #d1d1d1;
+    border-radius: 10px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    transition: 0.2s ease-in-out;
+}
+
+.inputFormTextarea {
+    border: 2px solid #d1d1d1;
+    border-radius: 10px;
+    padding: 3px 10px;
+    transition: 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+}
+
+.inputForm:focus-within, .inputFormTextarea:focus-within {
+    border: 2px solid #2d79f3;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.flex-row > div > label {
+    font-size: 14px;
+    color: black;
+    font-weight: 400;
+}
+
+.span a {
+    font-size: 14px;
+    margin-left: 5px;
+    color: #2d79f3;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+#id_title, #id_price, #id_category, #id_deadline {
+    width: 400px;
+    border: none;
+    height: 25px;
+    border-radius: 5px;
+    font-size: 17px;
+}
+
+#id_full_description {
+    width: 400px;
+    height: 75px;
+    border: none;
+    resize: none;
+    font-size: 16px;
+}
+
+#id_price {
+    width: 363px;
+}
+
+#id_price:focus::placeholder {
+    color: transparent;
+}
+
+.inputForm input[type="number"]::-webkit-outer-spin-button,
+.inputForm input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* Убирает стрелки в Chrome, Safari, Edge */
+    margin: 0;
+}
+
+#id_title:focus, #id_full_description:focus, #id_price:focus, #id_category:focus, #id_deadline:focus {
+    outline: none;
+}
+
+.currency {
+    width: 37px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+}
+
+.cancel-button {
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-create-order {
+    margin: 20px 0 10px 0;
+    border: none;
+    color: white;
+    background: #151717;
+    font-size: 15px;
+    font-weight: 800;
+    border-radius: 10px;
+    height: 50px;
+    width: 100%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.button-create-order:hover {
+    background-color: orange;
+    box-shadow: 0 5px 10px rgba(225, 165, 0, 0.7);
+}
