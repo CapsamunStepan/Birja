@@ -1,0 +1,59 @@
+<div class="flex-column">
+    <label for="{{ form.image.id_for_label }}">{{ form.image.label }}</label>
+</div>
+<div class="inputForm">
+    {{ form.image }}
+    {% if form.image.errors %}
+        <div class="error">{{ form.image.errors }}</div>
+    {% endif %}
+</div>
+
+<div class="flex-column">
+    <label for="{{ form.github.id_for_label }}">{{ form.github.label }}</label>
+</div>
+<div class="inputForm">
+    {{ form.github }}
+    {% if form.github.errors %}
+        <div class="error">{{ form.github.errors }}</div>
+    {% endif %}
+</div>
+
+<div class="flex-column">
+    <label for="{{ form.introduction.id_for_label }}">{{ form.introduction.label }}</label>
+</div>
+<div class="inputFormTextarea">
+    {{ form.introduction }}
+    {% if form.introduction.errors %}
+        <div class="error">{{ form.introduction.errors }}</div>
+    {% endif %}
+</div>
+
+<div class="flex-column">
+    <label for="{{ form.education_or_courses.id_for_label }}">{{ form.education_or_courses.label }}</label>
+</div>
+<div class="inputFormTextarea">
+    {{ form.education_or_courses }}
+    {% if form.education_or_courses.errors %}
+        <div class="error">{{ form.education_or_courses.errors }}</div>
+    {% endif %}
+</div>
+
+<div class="flex-column">
+    <label for="{{ form.qualities.id_for_label }}">{{ form.qualities.label }}</label>
+</div>
+<div class="inputFormTextarea">
+    {{ form.qualities }}
+    {% if form.qualities.errors %}
+        <div class="error">{{ form.qualities.errors }}</div>
+    {% endif %}
+</div>
+
+<div class="flex-column">
+    <label for="{{ form.skills.id_for_label }}">{{ form.skills.label }}</label>
+</div>
+<div class="inputFormTextarea">
+    {{ form.skills }}
+    {% if form.skills.errors %}
+        <div class="error">{{ form.skills.errors }}</div>
+    {% endif %}
+</div>
