@@ -30,80 +30,6 @@
     }
 }
 
-/*.form_content {*/
-/*    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;*/
-/*    padding: 0;*/
-
-/*}*/
-
-/*h1, p {*/
-/*    text-align: center;*/
-/*    margin-top: 20px;*/
-/*}*/
-
-/*form {*/
-/*    margin-left: 40%;*/
-/*}*/
-
-/*form p {*/
-/*    width: 100%;*/
-/*    overflow: auto;*/
-/*}*/
-
-/*label {*/
-/*    float: left;*/
-/*    clear: both;*/
-/*    color: #333;*/
-/*    margin-bottom: 4px;*/
-/*}*/
-
-/*input, textarea {*/
-/*    clear: both;*/
-/*    width: 300px;*/
-/*    float: left;*/
-/*    margin: 0 0 10px;*/
-/*    background-color: #46394B60;*/
-/*    border: 0;*/
-/*    padding: 6px 10px;*/
-/*    font-size: 14px;*/
-/*    border-radius: 5px;*/
-/*}*/
-
-/*input[type=submit], a.button {*/
-/*    background: #ffc600;*/
-/*    color: black;*/
-/*    font-size: 17px;*/
-/*    text-transform: uppercase;*/
-/*    border-radius: 5px;*/
-/*    transition: background-color 0.2s, color 0.2s;*/
-/*}*/
-
-/*input[type=submit]:hover, a.button:hover {*/
-/*    color: white;*/
-/*    background-color: #46394B;*/
-/*}*/
-
-
-/*.errorlist {*/
-/*    color: #cc0033;*/
-/*    float: left;*/
-/*    clear: both;*/
-/*    padding-left: 10px;*/
-/*}*/
-
-/*.helptext {*/
-/*    margin: 0 0 20px 0;*/
-/*    color: #aaa;*/
-/*    clear: both;*/
-/*    float: left;*/
-/*    font-size: 13px;*/
-/*}*/
-
-/*#id_github {*/
-/*    width: 300px;*/
-/*}*/
-
-
 .portfolio {
     padding: 0;
     margin: 0;
@@ -169,22 +95,21 @@
         margin-left: 5px;
 
         a {
-            color: orange;
+            color: white;
+            background: black;
             border-radius: 5px;
-            font-size: 21px;
-            font-weight: 700;
+            font-size: 17px;
+            font-weight: 600;
             text-decoration: None;
             text-transform: uppercase;
             padding: 10px 20px;
             transition: 0.3s;
-            box-shadow: 0 5px 10px rgba(225, 165, 0, 0.7);
         }
 
         a:hover {
-            color: white;
             background-color: orange;
+            box-shadow: 0 5px 10px rgba(225, 165, 0, 0.7);
         }
     }
-
 }
 

@@ -1,4 +1,4 @@
-.create-order-cnt {
+.create-order-cnt, .create-portfolio-cnt {
     display: flex;
     justify-content: center;
     /*margin: 30px;*/
@@ -77,7 +77,8 @@
     text-decoration: none;
 }
 
-#id_title, #id_price, #id_category, #id_deadline {
+#id_title, #id_price, #id_category, #id_deadline,
+#id_image, #id_github {
     width: 400px;
     border: none;
     height: 25px;
@@ -85,7 +86,15 @@
     font-size: 17px;
 }
 
-#id_full_description {
+#id_image {
+    width: 390px;
+    font-size: 16px;
+    height: 24px;
+    padding-left: 10px;
+}
+
+#id_full_description,
+#id_introduction, #id_education_or_courses, #id_qualities, #id_skills {
     width: 400px;
     height: 75px;
     border: none;
@@ -101,13 +110,18 @@
     color: transparent;
 }
 
+.inputForm input[type="number"] {
+    -moz-appearance: textfield; /* Убирает стрелки в Firefox */
+}
+
 .inputForm input[type="number"]::-webkit-outer-spin-button,
 .inputForm input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none; /* Убирает стрелки в Chrome, Safari, Edge */
     margin: 0;
 }
 
-#id_title:focus, #id_full_description:focus, #id_price:focus, #id_category:focus, #id_deadline:focus {
+#id_title:focus, #id_full_description:focus, #id_price:focus, #id_category:focus, #id_deadline:focus,
+#id_github:focus, #id_introduction:focus, #id_education_or_courses:focus, #id_qualities:focus, #id_skills:focus {
     outline: none;
 }
 
@@ -131,7 +145,7 @@
     align-items: center;
 }
 
-.button-create-order {
+.button-create-order, .button-create-portfolio {
     margin: 20px 0 10px 0;
     border: none;
     color: white;
@@ -145,7 +159,11 @@
     transition: 0.3s;
 }
 
-.button-create-order:hover {
+.button-create-portfolio {
+    margin: 20px 0 30px 0;
+}
+
+.button-create-order:hover, .button-create-portfolio:hover {
     background-color: orange;
     box-shadow: 0 5px 10px rgba(225, 165, 0, 0.7);
 }

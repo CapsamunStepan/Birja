@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import user_passes_test
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from .models import Portfolio
 from .forms import PortfolioForm
 
@@ -18,9 +18,8 @@ def home(request):
 @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
 def create_portfolio(request):
     portfolio = Portfolio.objects.filter(user_id=request.user.id).first()
-    has_portfolio = portfolio is not None
 
-    if has_portfolio:
+    if portfolio:
         return redirect('programmer:programmer_home')
 
     if request.method == 'POST':
@@ -28,11 +27,11 @@ def create_portfolio(request):
         if form.is_valid():
             form.instance.user_id = request.user.id
             form.save()
-            return render(request, 'programmer/portfolio_view.html', {'portfolio': portfolio})
+            return redirect(to='programmer:portfolio_view')
     else:
         form = PortfolioForm()
 
-    return render(request, 'programmer/portfolio_create.html', {'form': form, 'has_portfolio': has_portfolio})
+    return render(request, 'programmer/portfolio_create.html', {'form': form})
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
@@ -40,18 +39,14 @@ def view_portfolio(request):
     portfolio = Portfolio.objects.filter(user_id=request.user.id).first()
     if not portfolio:
         return redirect('programmer:portfolio_create')
-    url = portfolio.image.url
-    image_url = ''
-    for x in range(19, len(url)):
-        image_url += url[x]
-
-    return render(request, 'programmer/portfolio_view.html', {'portfolio': portfolio, 'image_url': image_url})
+    return render(request, 'programmer/portfolio_view.html', {'portfolio': portfolio})
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
 def edit_portfolio(request):
-    portfolio = get_object_or_404(Portfolio, user_id=request.user.id)
-
+    portfolio = Portfolio.objects.filter(user_id=request.user.id).first()
+    if not portfolio:
+        return redirect('programmer:portfolio_create')
     if request.method == 'POST':
         form = PortfolioForm(request.POST, request.FILES, instance=portfolio)
         if form.is_valid():

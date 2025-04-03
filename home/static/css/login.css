@@ -115,14 +115,15 @@ body {
     align-items: center;
     font-weight: 500;
     gap: 10px;
-    border: 2px solid #d1d1d1;
+    border: 2px solid #636363;
     background-color: #fafafa;
     cursor: pointer;
-    transition: 0.2s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 
 .btn:hover {
-    border: 2px solid #2d79f3;;
+    border: 2px solid #2d79f3;
+    background: #dceaff;
 }
 
 #id_username, #id_password, #id_first_name, #id_last_name, #id_email, #id_password2 {
