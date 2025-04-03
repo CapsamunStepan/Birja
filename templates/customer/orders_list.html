@@ -9,7 +9,34 @@
 {% block content %}
     <h1>Мои заказы</h1>
     {% for order in orders %}
-        {{ order.title }}
+        <a href="{% url 'customer:order_detail' order.id %}" class="order-link">
+            <div class="order-cnt-outer">
+                <div class="order-cnt-inner">
+                    <div class="left">
+                        <div class="title">{{ order.title }}</div>
+                        <div class="category">{{ order.get_category_display }}</div>
+                        <div class="created">{{ order.created }}</div>
+                    </div>
+                    <div class="right">
+                        {% if order.price %}
+                            <div class="price">Цена: {{ order.price }} MDL</div>
+                        {% else %}
+                            <div class="price">Договорная</div>
+                        {% endif %}
+                        {% if order.deadline %}
+                            <div class="deadline">Выполнить до: {{ order.deadline }}</div>
+                        {% endif %}
+                        {% if order.programmer %}
+                            <div class="programmer">{{ order.programmer }}</div>
+                        {% endif %}
+                        {% if order.taken %}
+                            <div class="taken">{{ order.taken }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </a>
+
     {% empty %}
         <p>Вы не создали ни одного заказа</p>
     {% endfor %}

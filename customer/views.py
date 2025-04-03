@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect
 from programmer.models import Portfolio
-from .models import Order
+from .models import Order, Bid, Comment
 from .forms import OrderForm
 
 
@@ -19,7 +19,7 @@ def programmers_list(request):
 
 @user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
 def orders_list(request):
-    orders = Order.objects.filter(author=request.user)
+    orders = Order.objects.filter(author=request.user).order_by('-created')
     return render(request, 'customer/orders_list.html', {"orders": orders})
 
 
@@ -41,10 +41,17 @@ def order_create(request):
 def order_detail(request, order_id):
     order = Order.objects.get(id=order_id)
     if order.author == request.user:
-        return render(request, 'customer/order_detail.html', {"order": order})
+        if not order.programmer:
+            bids = order.bids.all()
+            comments = None
+        else:
+            comments = order.comments.all()
+            bids = None
+        return render(request, 'customer/order_detail.html',
+                      {"order": order, "bids": bids, "comments": comments})
     else:
         # access denied
-        pass
+        return redirect('customer:orders_list')
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
