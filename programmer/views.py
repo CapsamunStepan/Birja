@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect
 from .models import Portfolio
 from .forms import PortfolioForm
+from customer.models import Order, Bid
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
@@ -58,12 +59,18 @@ def edit_portfolio(request):
     return render(request, 'programmer/portfolio_edit.html', {'form': form, 'portfolio': portfolio})
 
 
-# @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
-# def view_orders(request):
-#     orders = Order.objects.filter(programmer_id=None).order_by('-created')
-#     return render(request, 'programmer/view_orders.html', {'orders': orders})
-#
-#
+@user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
+def order_list(request):
+    orders = Order.objects.filter(programmer=None).order_by('-created')
+    return render(request, 'programmer/order_list.html', {'orders': orders})
+
+
+@user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
+def place_a_bid(request, order_id):
+    order = Order.objects.filter(id=order_id, programmer=None)
+
+
+
 # @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
 # def take_order(request):
 #     order_id = request.POST.get('order_id')

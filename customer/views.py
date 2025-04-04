@@ -18,9 +18,9 @@ def programmers_list(request):
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
-def orders_list(request):
+def order_list(request):
     orders = Order.objects.filter(author=request.user).order_by('-created')
-    return render(request, 'customer/orders_list.html', {"orders": orders})
+    return render(request, 'customer/order_list.html', {"orders": orders})
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
@@ -31,7 +31,7 @@ def order_create(request):
             order = form.save(commit=False)
             order.author = request.user  # Присваиваем пользователя
             order.save()
-            return redirect(to='customer:orders_list')
+            return redirect(to='customer:order_list')
     else:
         form = OrderForm()
     return render(request, 'customer/order_create.html', {'form': form})
@@ -51,7 +51,7 @@ def order_detail(request, order_id):
                       {"order": order, "bids": bids, "comments": comments})
     else:
         # access denied
-        return redirect('customer:orders_list')
+        return redirect('customer:order_list')
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
@@ -68,7 +68,7 @@ def order_edit(request, order_id):
         return render(request, 'customer/order_edit.html', {'form': form})
     else:
         # access denied
-        return redirect('customer:orders_list')
+        return redirect('customer:order_list')
 
 
 def order_delete(request, order_id):
@@ -77,5 +77,5 @@ def order_delete(request, order_id):
         if order.author == request.user:  # else access denied
             if not order.programmer:  # else programmer should reject order
                 order.delete()
-    return redirect(to='customer:orders_list')
+    return redirect(to='customer:order_list')
 
