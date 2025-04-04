@@ -8,4 +8,11 @@
 
 {% block content %}
     <h1>Редактирование заказа</h1>
+    <div class="create-order-cnt">
+        <form method="post" enctype="multipart/form-data">
+            {% include 'customer/order_form.html' %}
+            {% csrf_token %}
+            <button type="submit" class="button-create-order">Сохранить</button>
+        </form>
+    </div>
 {% endblock %}

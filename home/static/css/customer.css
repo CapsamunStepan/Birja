@@ -1,6 +1,6 @@
 .order-link {
-        text-decoration: none;
-    }
+    text-decoration: none;
+}
 
 .order-cnt-outer {
     display: flex;
@@ -17,7 +17,6 @@
 
 .order-cnt-outer:hover {
     transform: translateY(-5px);
-    cursor: pointer;
 }
 
 .order-cnt-inner {
@@ -58,25 +57,38 @@
         color: #999999;
     }
 
+    .full-description {
+        color: black;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Ограничивает количество строк */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
     .price {
-    font-size: 1rem;
-    color: #28a745;
-    font-weight: bold;
-    margin-top: 5px;
-    background: #e5ffe5;
-    padding: 5px 10px;
-    border-radius: 5px;
-    display: inline-block;
-}
+        font-size: 1rem;
+        color: #28a745;
+        font-weight: bold;
+        margin-top: 5px;
+        background: #e5ffe5;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: inline-block;
+    }
 
     .deadline {
-    font-size: 1rem;
-    color: #d9534f;
-    font-weight: bold;
-    margin-top: 10px;
-    background: #ffe5e5;
-    padding: 5px 10px;
-    border-radius: 5px;
-    display: inline-block;
+        font-size: 1rem;
+        color: #d9534f;
+        font-weight: bold;
+        margin-top: 10px;
+        background: #ffe5e5;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: inline-block;
+    }
 }
+
+.info-p {
+    margin: 50px;
 }

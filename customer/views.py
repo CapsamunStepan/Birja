@@ -56,4 +56,26 @@ def order_detail(request, order_id):
 
 @user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
 def order_edit(request, order_id):
-    pass
+    order = Order.objects.get(id=order_id)
+    if order.author == request.user:
+        if request.method == 'POST':
+            form = OrderForm(request.POST, instance=order)
+            if form.is_valid():
+                form.save()
+                return redirect(to='customer:order_detail', order_id=order_id)
+        else:
+            form = OrderForm(instance=order)
+        return render(request, 'customer/order_edit.html', {'form': form})
+    else:
+        # access denied
+        return redirect('customer:orders_list')
+
+
+def order_delete(request, order_id):
+    if request.method == 'POST':  # else access denied
+        order = Order.objects.get(id=order_id)
+        if order.author == request.user:  # else access denied
+            if not order.programmer:  # else programmer should reject order
+                order.delete()
+    return redirect(to='customer:orders_list')
+
