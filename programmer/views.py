@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect
 from .models import Portfolio
-from .forms import PortfolioForm
+from .forms import PortfolioForm, BidForm
 from customer.models import Order, Bid
 
 
@@ -67,7 +67,38 @@ def order_list(request):
 
 @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
 def place_a_bid(request, order_id):
+    order = Order.objects.filter(id=order_id, programmer=None).first()
+    if not order:
+        return redirect('programmer:order_list')
+
+    if request.method == 'POST':
+        form = BidForm(request.POST)
+        if form.is_valid():
+            bid = form.save(commit=False)
+            bid.programmer = request.user
+            bid.order = order
+            bid.save()
+            return redirect('programmer:order_list')
+    else:
+        form = BidForm()
+
+    return render(request, 'programmer/order_list.html', {'form': form, 'order': order})
+
+
+@user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
+def order_detail(request, order_id):
     order = Order.objects.filter(id=order_id, programmer=None)
+    if not order:
+        return redirect('programmer:order_list')
+    else:
+        return render(request, 'programmer/order_detail.html', {'order': order})
+
+
+@user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
+def my_orders(request):
+    orders = Order.objects.filter(programmer=request.user).order_by('-taken')
+    return render(request, 'programmer/my_orders.html', {'orders': orders})
+
 
 
 

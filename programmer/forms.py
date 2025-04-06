@@ -1,5 +1,6 @@
 from django import forms
 from .models import Portfolio
+from customer.models import Bid
 
 
 class PortfolioForm(forms.ModelForm):
@@ -9,3 +10,9 @@ class PortfolioForm(forms.ModelForm):
         widgets = {
             'image': forms.FileInput(attrs={'class': 'custom-file-input'})
         }
+
+
+class BidForm(forms.ModelForm):
+    class Meta:
+        model = Bid
+        fields = ['description']
