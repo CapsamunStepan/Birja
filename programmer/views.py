@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import user_passes_test
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Portfolio
 from .forms import PortfolioForm, BidForm
 from customer.models import Order, Bid
@@ -62,12 +62,15 @@ def edit_portfolio(request):
 @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
 def order_list(request):
     orders = Order.objects.filter(programmer=None).order_by('-created')
-    return render(request, 'programmer/order_list.html', {'orders': orders})
+    form = BidForm()
+    user_bids = Bid.objects.filter(programmer=request.user).values_list('order_id', flat=True)
+    return render(request, 'programmer/order_list.html',
+                  {'orders': orders, 'form': form, 'user_bids': user_bids})
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
 def place_a_bid(request, order_id):
-    order = Order.objects.filter(id=order_id, programmer=None).first()
+    order = get_object_or_404(Order, id=order_id, programmer=None)
     if not order:
         return redirect('programmer:order_list')
 
@@ -79,10 +82,6 @@ def place_a_bid(request, order_id):
             bid.order = order
             bid.save()
             return redirect('programmer:order_list')
-    else:
-        form = BidForm()
-
-    return render(request, 'programmer/order_list.html', {'form': form, 'order': order})
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
@@ -98,8 +97,6 @@ def order_detail(request, order_id):
 def my_orders(request):
     orders = Order.objects.filter(programmer=request.user).order_by('-taken')
     return render(request, 'programmer/my_orders.html', {'orders': orders})
-
-
 
 
 # @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())

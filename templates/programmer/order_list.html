@@ -9,7 +9,7 @@
 {% block content %}
     <h1>Заказы</h1>
     {% for order in orders %}
-        <a href="#" class="order-link">
+        <a href="{% url 'programmer:order_detail' order.id %}" class="order-link">
             <div class="order-cnt-outer">
                 <div class="order-cnt-inner">
                     <div class="left">
@@ -17,6 +17,26 @@
                         <div class="category">{{ order.get_category_display }}</div>
                         <div class="created">{{ order.created }}</div>
                         <div class="full-description">{{ order.full_description }}</div>
+                        {% if order.id not in user_bids %}
+                            <form action="{% url 'programmer:place_a_bid' order.id %}" method="post">
+                                {% csrf_token %}
+                                {#                            <div class="flex-column">#}
+                                {#                                <label for="{{ form.description.id_for_label }}">Мотивационные слова:</label>#}
+                                {#                            </div>#}
+                                {#                            <div class="inputFormTextarea" style="max-width: 400px">#}
+                                {#                                {{ form.description }}#}
+                                {#                                {% if form.description.errors %}#}
+                                {#                                    <div class="error">{{ form.description.errors }}</div>#}
+                                {#                                {% endif %}#}
+                                {#                            </div>#}
+
+                                <button type="submit" class="button-create-order" style="max-width: 420px">Отправить
+                                    заявку
+                                </button>
+                            </form>
+                        {% else %}
+                            <p style="color: green; margin-top: 15px;">Вы уже подали заявку ✔️</p>
+                        {% endif %}
                     </div>
                     <div class="right">
                         {% if order.price %}

@@ -30,7 +30,7 @@ class Order(models.Model):
     deadline = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.title} + {self.author}"
+        return f"{self.title}, {self.author.first_name}"
 
 
 class Bid(models.Model):

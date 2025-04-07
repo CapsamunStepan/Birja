@@ -94,7 +94,8 @@
 }
 
 #id_full_description,
-#id_introduction, #id_education_or_courses, #id_qualities, #id_skills {
+#id_introduction, #id_education_or_courses, #id_qualities, #id_skills,
+#id_description {
     width: 400px;
     height: 75px;
     border: none;
@@ -121,7 +122,8 @@
 }
 
 #id_title:focus, #id_full_description:focus, #id_price:focus, #id_category:focus, #id_deadline:focus,
-#id_github:focus, #id_introduction:focus, #id_education_or_courses:focus, #id_qualities:focus, #id_skills:focus {
+#id_github:focus, #id_introduction:focus, #id_education_or_courses:focus, #id_qualities:focus, #id_skills:focus,
+#id_description:focus {
     outline: none;
 }
 

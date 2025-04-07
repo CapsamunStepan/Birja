@@ -4,13 +4,13 @@
     {% include 'programmer/menu.html' %}
 {% endblock %}
 {% block content %}
-            <h2>Редактирование Портфолио</h2>
-            <div class="create-portfolio-cnt">
-            <form method="post" enctype="multipart/form-data">
-                {% include 'programmer/portfolio_form.html' %}
-                {% csrf_token %}
-                <button type="submit" class="button-create-portfolio">Сохранить</button>
-            </form>
-        </div>
+    <h2>Редактирование Портфолио</h2>
+    <div class="create-portfolio-cnt">
+        <form method="post" enctype="multipart/form-data">
+            {% include 'programmer/portfolio_form.html' %}
+            {% csrf_token %}
+            <button type="submit" class="button-create-portfolio">Сохранить</button>
+        </form>
+    </div>
 
 {% endblock %}
