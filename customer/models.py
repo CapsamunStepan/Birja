@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 # Create your models here.
@@ -46,13 +47,14 @@ class Bid(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Bid by {self.programmer} for {self.order}"
+        return f"Заявка пользователя {self.programmer} на заказ {self.order}"
 
     def accept(self):
         # Принять заявку и отклонить остальные
         self.status = 'accepted'
         self.save()
         self.order.programmer = self.programmer  # Назначаем программиста
+        self.order.taken = timezone.now()
         self.order.save()
 
         Bid.objects.filter(order=self.order).exclude(id=self.id).update(status='rejected')
@@ -65,4 +67,4 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Comment by {self.user.username} on {self.order.title}"
+        return f"Комментарий пользователя {self.user.username} на заказ {self.order.title}"

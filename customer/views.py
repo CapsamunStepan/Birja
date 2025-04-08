@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import user_passes_test
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from programmer.models import Portfolio
 from .models import Order, Bid, Comment
 from .forms import OrderForm
@@ -85,6 +85,7 @@ def order_edit(request, order_id):
         return redirect('customer:order_list')
 
 
+@user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
 def order_delete(request, order_id):
     if request.method == 'POST':  # else access denied
         order = Order.objects.get(id=order_id)
@@ -93,3 +94,14 @@ def order_delete(request, order_id):
                 order.delete()
     return redirect(to='customer:order_list')
 
+
+@user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
+def accept_bid(request, bid_id):
+    bid = get_object_or_404(Bid, id=bid_id)
+    if bid.order.author == request.user:
+        if request.method == 'POST':
+            bid.accept()
+        return redirect('customer:order_detail', order_id=bid.order.id)
+    else:
+        # access denied
+        return HttpResponse("Access denied")

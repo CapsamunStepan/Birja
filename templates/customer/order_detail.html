@@ -55,7 +55,8 @@
                             <div class="created-at">{{ bid.created_at }}</div>
                         </div>
                         <div class="buttons">
-                            <form action="{% url 'customer:order_edit' order.id %}">
+                            <form action="{% url 'customer:accept_bid' bid.id %}" method="post">
+                                {% csrf_token %}
                                 <button type="submit" class="accept-button" style="margin: 0">Принять</button>
                             </form>
 
