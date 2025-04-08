@@ -86,7 +86,7 @@ def place_a_bid(request, order_id):
 
 @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
 def order_detail(request, order_id):
-    order = Order.objects.filter(id=order_id, programmer=None)
+    order = get_object_or_404(Order, id=order_id, programmer=None)
     if not order:
         return redirect('programmer:order_list')
     else:

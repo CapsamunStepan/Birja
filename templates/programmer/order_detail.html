@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Детали заказа{% endblock %}
+
+{% block menu %}
+    {% include 'programmer/menu.html' %}
+{% endblock %}
+
+{% block content %}
+    <h1>Детали заказа</h1>
+    <div class="order-detail-cnt">
+        <div class="order-full-info">
+            <div class="left">
+                <div class="title">{{ order.title }}</div>
+                <div class="category">{{ order.get_category_display }}</div>
+                <div class="created">{{ order.created }}</div>
+                <div class="full-description-all-lines">{{ order.full_description }}</div>
+            </div>
+            <div class="right">
+                {% if order.price %}
+                    <div class="price">Цена: {{ order.price }} MDL</div>
+                {% else %}
+                    <div class="price">Договорная</div>
+                {% endif %}
+                {% if order.deadline %}
+                    <div class="deadline">Выполнить до: {{ order.deadline }}</div>
+                {% endif %}
+                {% if order.programmer %}
+                    <div class="programmer">{{ order.programmer }}</div>
+                {% endif %}
+                {% if order.taken %}
+                    <div class="taken">{{ order.taken }}</div>
+                {% endif %}
+            </div>
+        </div>
+{#        <form action="{% url 'customer:order_edit' order.id %}">#}
+{#            <button type="submit">Редактировать</button>#}
+{#        </form>#}
+{##}
+{#        <form action="{% url 'customer:order_delete' order.id %}" method="post">#}
+{#            {% csrf_token %}#}
+{#            <button type="submit">Удалить</button>#}
+{#        </form>#}
+
+
+        {% if bids %}
+            <div class="bids">
+                <h3>Заявки:</h3>
+            </div>
+        {% endif %}
+        {% if comments %}
+            <div class="comments">
+                <h3>Комментарии:</h3>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

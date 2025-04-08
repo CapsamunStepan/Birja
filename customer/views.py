@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import user_passes_test
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from programmer.models import Portfolio
 from .models import Order, Bid, Comment
 from .forms import OrderForm
@@ -15,6 +15,12 @@ def home(request):
 def programmers_list(request):
     portfolios = Portfolio.objects.all()
     return render(request, 'customer/programmers.html', {"portfolios": portfolios})
+
+
+@user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
+def programmer_portfolio(request, user):
+    portfolio = get_object_or_404(Portfolio, user=user)
+    return render(request, 'customer/programmer_portfolio.html', {"portfolio": portfolio})
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
@@ -57,6 +63,7 @@ def order_detail(request, order_id):
 @user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
 def order_edit(request, order_id):
     order = Order.objects.get(id=order_id)
+    data = order.deadline
     if order.author == request.user:
         if request.method == 'POST':
             form = OrderForm(request.POST, instance=order)
@@ -64,8 +71,11 @@ def order_edit(request, order_id):
                 form.save()
                 return redirect(to='customer:order_detail', order_id=order_id)
         else:
-            form = OrderForm(instance=order)
-        return render(request, 'customer/order_edit.html', {'form': form})
+            form = OrderForm(instance=order, initial={
+                'deadline': order.deadline.strftime('%Y-%m-%d') if order.deadline else ''
+            })
+
+        return render(request, 'customer/order_edit.html', {'form': form, 'data': data})
     else:
         # access denied
         return redirect('customer:order_list')

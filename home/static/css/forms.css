@@ -147,7 +147,7 @@
     align-items: center;
 }
 
-.button-create-order, .button-create-portfolio {
+.button-create-order, .button-create-portfolio, .edit-order-button, .delete-order-button, .accept-button {
     margin: 20px 0 10px 0;
     border: none;
     color: white;
@@ -158,7 +158,7 @@
     height: 50px;
     width: 100%;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.3s ease-in-out;
 }
 
 .button-create-portfolio {
@@ -168,4 +168,42 @@
 .button-create-order:hover, .button-create-portfolio:hover {
     background-color: orange;
     box-shadow: 0 5px 10px rgba(225, 165, 0, 0.7);
+}
+
+.edit-order-button {
+    width: 200px;
+    background-color: orange;
+    border: 1px transparent;
+}
+
+.delete-order-button {
+    width: 200px;
+    background-color: red;
+    border: 1px transparent;
+}
+
+.accept-button {
+    width: 200px;
+    background-color: green;
+    border: 1px transparent;
+}
+
+.edit-order-button:hover {
+    background-color: #fdcc5b;
+    border: 1px solid orange;
+    transform: translate(0, -1px);
+}
+
+.delete-order-button:hover {
+    background-color: #fa5454;
+    border: 1px solid red;
+        transform: translate(0, -1px);
+
+}
+
+.accept-button:hover {
+    background-color: #22ba22;
+    border: 1px solid green;
+        transform: translate(0, -1px);
+
 }

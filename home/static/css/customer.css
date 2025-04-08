@@ -6,9 +6,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5px;
+    padding: 4px;
     background-color: rgba(100, 100, 100, 0.5);
-    border-radius: 13px;
+    border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 85%;
     margin: 20px auto;
@@ -26,69 +26,153 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
+}
 
 
-    .left {
-        min-width: 70%;
-    }
+.left {
+    width: 70%;
+}
 
-    .right {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        width: calc(30% - 5px);
-    }
+.right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: calc(30% - 5px);
+}
 
-    .title {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #333333;
-        margin-bottom: 10px;
-    }
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 10px;
+}
 
-    .category {
-        font-size: 1rem;
-        color: #666666;
-        margin-bottom: 5px;
-    }
+.category {
+    font-size: 1rem;
+    color: #666666;
+    margin-bottom: 3px;
+}
 
-    .created {
-        font-size: 0.9rem;
-        color: #999999;
-    }
+.created {
+    font-size: 0.9rem;
+    color: #999999;
+    margin-bottom: 6px;
+}
 
-    .full-description {
-        color: black;
-        display: -webkit-box;
-        -webkit-line-clamp: 2; /* Ограничивает количество строк */
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+.full-description {
+    color: black;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Ограничивает количество строк */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: justify;
+}
 
-    .price {
-        font-size: 1rem;
-        color: #28a745;
-        font-weight: bold;
-        margin-top: 5px;
-        background: #e5ffe5;
-        padding: 5px 10px;
-        border-radius: 5px;
-        display: inline-block;
-    }
+.full-description-all-lines {
+    color: black;
+    text-align: justify;
+}
 
-    .deadline {
-        font-size: 1rem;
-        color: #d9534f;
-        font-weight: bold;
-        margin-top: 10px;
-        background: #ffe5e5;
-        padding: 5px 10px;
-        border-radius: 5px;
-        display: inline-block;
-    }
+.price {
+    font-size: 1rem;
+    color: #28a745;
+    font-weight: bold;
+    margin-top: 5px;
+    background: #c5fdc5;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.deadline {
+    font-size: 1rem;
+    color: #d9534f;
+    font-weight: bold;
+    margin-top: 10px;
+    background: #fbcaca;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.programmer, .taken {
+    font-size: 1rem;
+    color: #07367e;
+    font-weight: bold;
+    margin-top: 10px;
+    background: #7eb1fb;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.taken {
+    margin-bottom: 5px;
+}
+
+.order-detail-cnt {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.order-full-info {
+    width: 90%;
+    display: flex;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 19px -3px rgba(0, 0, 0, 0.5);
 }
 
 .info-p {
     margin: 50px;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.bids {
+    h3 {
+        display: flex;
+        justify-content: center;
+        margin: 20px;
+    }
+
+    .bid-cnt {
+        display: flex;
+        justify-content: center;
+        margin-top: 15px;
+    }
+
+    .bid-cnt-inner {
+        width: 50%;
+        padding: 20px 40px;
+        display: flex;
+        justify-content: space-between;
+        border-radius: 15px;
+        box-shadow: 0 0 19px -3px rgba(0, 0, 0, 0.5);
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+        font-size: 1.2rem;
+        transition: 0.3s;
+    }
+
+    a:hover {
+        transform: translate(0, -2px);
+        color: orange;
+    }
+
+    .created-at {
+        color: #666666;
+        margin: 5px 0;
+        font-size: 0.9rem;
+    }
+
 }

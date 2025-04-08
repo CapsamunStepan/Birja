@@ -30,7 +30,7 @@
                                 {#                                {% endif %}#}
                                 {#                            </div>#}
 
-                                <button type="submit" class="button-create-order" style="max-width: 420px">Отправить
+                                <button type="submit" class="button-create-order" style="max-width: 250px">Отправить
                                     заявку
                                 </button>
                             </form>
@@ -48,7 +48,7 @@
                             <div class="deadline">Выполнить до: {{ order.deadline }}</div>
                         {% endif %}
                         {% if order.programmer %}
-                            <div class="programmer">{{ order.programmer }}</div>
+                            <div class="programmer">Выполняет: {{ order.programmer }}</div>
                         {% endif %}
                         {% if order.taken %}
                             <div class="taken">{{ order.taken }}</div>

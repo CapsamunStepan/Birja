@@ -28,10 +28,10 @@
                             <div class="deadline">Выполнить до: {{ order.deadline }}</div>
                         {% endif %}
                         {% if order.programmer %}
-                            <div class="programmer">{{ order.programmer }}</div>
+                            <div class="programmer">Выполняет: {{ order.programmer.first_name }} {{ order.programmer.last_name }}</div>
                         {% endif %}
                         {% if order.taken %}
-                            <div class="taken">{{ order.taken }}</div>
+                            <div class="taken">Приступил: {{ order.taken }}</div>
                         {% endif %}
                     </div>
                 </div>
