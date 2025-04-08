@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from programmer.models import Portfolio
 from .models import Order, Bid, Comment
 from .forms import OrderForm
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -26,7 +27,10 @@ def programmer_portfolio(request, user):
 @user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
 def order_list(request):
     orders = Order.objects.filter(author=request.user).order_by('-created')
-    return render(request, 'customer/order_list.html', {"orders": orders})
+    paginator = Paginator(orders, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'customer/order_list.html', {"orders": orders, "page_obj": page_obj})
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())

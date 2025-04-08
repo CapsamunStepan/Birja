@@ -8,7 +8,7 @@
 
 {% block content %}
     <h1>Мои заказы</h1>
-    {% for order in orders %}
+    {% for order in page_obj %}
         <a href="{% url 'customer:order_detail' order.id %}" class="order-link">
             <div class="order-cnt-outer">
                 <div class="order-cnt-inner">
@@ -37,8 +37,24 @@
                 </div>
             </div>
         </a>
-
     {% empty %}
         <p>Вы не создали ни одного заказа</p>
     {% endfor %}
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">1</a>
+            <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}

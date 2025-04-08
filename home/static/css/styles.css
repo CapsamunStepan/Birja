@@ -145,7 +145,7 @@ header a:hover {
     justify-content: center;
     padding: 30px;
     border-radius: 20px;
-    box-shadow: 0px 0px 19px -3px rgba(0,0,0,0.5);
+    box-shadow: 0 0 19px -3px rgba(0,0,0,0.5);
 }
 
 .navigation {
@@ -155,7 +155,54 @@ header a:hover {
     justify-content: center;
     padding: 30px;
     border-radius: 20px;
-    box-shadow: 0px 0px 19px -3px rgba(0,0,0,0.5);
+    box-shadow: 0 0 19px -3px rgba(0,0,0,0.5);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 50px;
+}
+
+.pagination a {
+    text-decoration: none;
+    color: #007bff;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination .current {
+    font-weight: bold;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    margin-right: 5px;
+}
+
+.pagination .step-links a {
+    padding: 8px 12px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.pagination .step-links a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination .disabled {
+    color: #ccc;
+    pointer-events: none;
 }
 
 footer {
