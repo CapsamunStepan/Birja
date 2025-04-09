@@ -211,6 +211,7 @@
         font-weight: 600;
         color: #222;
         font-size: 1.1rem;
+        width: 180px;
     }
 
     .created-at {
@@ -226,4 +227,26 @@
         color: #444;
         text-align: justify;
     }
+}
+
+.rejected-info, .pending-info, .accepted-info {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    font-weight: 700;
+    font-size: 1.1rem;
+    width: 150px;
+
+}
+
+.rejected-info {
+    color: red;
+}
+
+.accepted-info {
+    color: green;
+}
+
+.pending-info {
+    color: orange;
 }

@@ -205,6 +205,10 @@ header a:hover {
     pointer-events: none;
 }
 
+.space50 {
+    height: 50px;
+}
+
 footer {
     height: 50px;
     font-size: 15px;

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Заказы{% endblock %}
+{% block title %}Мои заказы{% endblock %}
 
 {% block menu %}
     {% include 'programmer/menu.html' %}
@@ -40,4 +40,46 @@
     {% empty %}
         <p>Вы не выполняете ни один заказ</p>
     {% endfor %}
+    <div class="bids">
+        {% if bids %}
+            <h2>Отправленные заявки</h2>
+            {% for bid in bids %}
+                <div class="bid-cnt">
+                    <div class="bid-cnt-inner">
+                        <div class="left-part">
+                            <a href="{% url 'programmer:order_detail' bid.order.id %}">{{ bid.order.title }}</a>
+                            <div class="created-at">{{ bid.created_at }}</div>
+                        </div>
+                        <div class="buttons">
+                            {% if bid.status == 'pending' %}
+                                <div class="pending-info">В ожидании</div>
+                                <form action="#" method="post" style="display: flex; align-items: center">
+                                    {% csrf_token %}
+                                    <button type="submit" class="edit-order-button" style="margin: 0">Отменить заявку
+                                    </button>
+                                </form>
+                            {% elif bid.status == 'accepted' %}
+                                <div class="accepted-info">Принято</div>
+                                <form action="#" method="post" style="display: flex; align-items: center">
+                                    {% csrf_token %}
+                                    <button type="submit" class="accept-button" style="margin: 0">Убрать заявку</button>
+                                </form>
+                            {% else %}
+                                <div class="rejected-info">Отклонено</div>
+                                <form action="#" method="post" style="display: flex; align-items: center">
+                                    {% csrf_token %}
+                                    <button type="submit" class="delete-order-button" style="margin: 0">Удалить заявку
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+        {% endif %}
+    </div>
+    <div class="space50"></div>
+
 {% endblock %}

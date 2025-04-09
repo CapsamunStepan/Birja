@@ -42,7 +42,7 @@ class Bid(models.Model):
     ]
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='bids')
     description = models.TextField(blank=True)
-    programmer = models.ForeignKey(User, on_delete=models.CASCADE)
+    programmer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bids')
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
 

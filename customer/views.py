@@ -53,7 +53,7 @@ def order_detail(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     if order.author == request.user:
         if not order.programmer:
-            bids = order.bids.all()
+            bids = order.bids.all().order_by('status')
         else:
             bids = None
             if request.method == 'POST':

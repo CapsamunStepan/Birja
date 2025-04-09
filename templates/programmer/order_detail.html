@@ -15,6 +15,28 @@
                 <div class="category">{{ order.get_category_display }}</div>
                 <div class="created">{{ order.created }}</div>
                 <div class="full-description-all-lines">{{ order.full_description }}</div>
+                {% if not order.programmer %}
+                    {% if bid %}
+                        <p style="color: green; margin-top: 15px;">Вы уже подали заявку ✔️</p>
+                    {% else %}
+                        <form action="{% url 'programmer:place_a_bid' order.id %}" method="post">
+                            {% csrf_token %}
+                            {#                            <div class="flex-column">#}
+                            {#                                <label for="{{ form.description.id_for_label }}">Мотивационные слова:</label>#}
+                            {#                            </div>#}
+                            {#                            <div class="inputFormTextarea" style="max-width: 400px">#}
+                            {#                                {{ form.description }}#}
+                            {#                                {% if form.description.errors %}#}
+                            {#                                    <div class="error">{{ form.description.errors }}</div>#}
+                            {#                                {% endif %}#}
+                            {#                            </div>#}
+
+                            <button type="submit" class="button-create-order" style="max-width: 250px">Отправить
+                                заявку
+                            </button>
+                        </form>
+                    {% endif %}
+                {% endif %}
             </div>
             <div class="right">
                 {% if order.price %}
@@ -31,25 +53,50 @@
                 {% endif %}
             </div>
         </div>
-        {#        <form action="{% url 'customer:order_edit' order.id %}">#}
-        {#            <button type="submit">Редактировать</button>#}
-        {#        </form>#}
-        {##}
-        {#        <form action="{% url 'customer:order_delete' order.id %}" method="post">#}
-        {#            {% csrf_token %}#}
-        {#            <button type="submit">Удалить</button>#}
-        {#        </form>#}
-
-
-        {% if bids %}
-            <div class="bids">
-                <h3>Заявки:</h3>
-            </div>
-        {% endif %}
-        {% if comments %}
-            <div class="comments">
-                <h3>Комментарии:</h3>
-            </div>
-        {% endif %}
     </div>
+    {% if comments %}
+        <div class="comments">
+            <h3>Комментарии:</h3>
+            {% for comment in comments %}
+                <div class="comment-cnt">
+                    <div class="comment-cnt-inner">
+                        <div class="left-comment-part">
+                            <div class="author">
+                                {% if comment.user == request.user %}
+                                    Вы:
+                                {% else %}
+                                    {{ comment.user.first_name }} {{ comment.user.last_name }}
+                                {% endif %}
+                            </div>
+                            <div class="created-at">
+                                {{ comment.created|date:"d.m.y H:i" }}
+                            </div>
+                        </div>
+                        <div class="text">
+                            {{ comment.text }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if form %}
+        <div class="add-comment-cnt">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="flex-column">
+                    <label for="{{ form.text.id_for_label }}">Новый комментарий:</label>
+                </div>
+                <div class="inputFormTextarea">
+                    {{ form.text }}
+                    {% if form.text.errors %}
+                        <div class="error">{{ form.text.errors }}</div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="button-create-order">Добавить комментарий</button>
+            </form>
+        </div>
+        <div class="space50"></div>
+    {% endif %}
 {% endblock %}

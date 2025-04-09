@@ -71,64 +71,57 @@
                         </div>
                     </div>
                 {% endif %}
+                {% if bid.status == 'rejected' %}
+                    <div class="bid-cnt">
+                        <div class="bid-cnt-inner">
+                            <div class="left-part">
+                                <a href="{% url 'customer:programmer_portfolio' bid.programmer %}">{{ bid.programmer.first_name }} {{ bid.programmer.last_name }}</a>
+                                <div class="created-at">{{ bid.created_at }}</div>
+                            </div>
+                            <div class="buttons">
+                                <div class="rejected-info">
+                                    Отклонено
+                                </div>
+                                <form action="{% url 'customer:accept_bid' bid.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="accept-button" style="margin: 0">Принять</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
+        <div class="space50"></div>
     {% elif not order.programmer %}
         <p class="info-p">Нет ни одной заявки на выполнение...</p>
     {% endif %}
-{#    {% if comments %}#}
-{#        <div class="comments">#}
-{#            <h3>Комментарии:</h3>#}
-{#            {% for comment in comments %}#}
-{#                <div class="comment-cnt">#}
-{#                    <div class="comment-cnt-inner">#}
-{#                        <div class="left-comment-part">#}
-{#                            <div class="author">#}
-{#                                {% if comment.user == request.user %}#}
-{#                                    Вы:#}
-{#                                {% else %}#}
-{#                                    {{ comment.user.first_name }} {{ comment.user.last_name }}#}
-{#                                {% endif %}#}
-{#                            </div>#}
-{#                            <div class="created-at">#}
-{#                                {{ comment.created|date:"d.m.y H:i" }}#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        <div class="text">#}
-{#                            {{ comment.text }}#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{##}
-{#            {% endfor %}#}
-{#        </div>#}
-{#    {% endif %}#}
     {% if comments %}
-    <div class="comments">
-        <h3>Комментарии:</h3>
-        {% for comment in comments %}
-            <div class="comment-cnt">
-                <div class="comment-cnt-inner">
-                    <div class="left-comment-part">
-                        <div class="author">
-                            {% if comment.user == request.user %}
-                                Вы:
-                            {% else %}
-                                {{ comment.user.first_name }} {{ comment.user.last_name }}
-                            {% endif %}
+        <div class="comments">
+            <h3>Комментарии:</h3>
+            {% for comment in comments %}
+                <div class="comment-cnt">
+                    <div class="comment-cnt-inner">
+                        <div class="left-comment-part">
+                            <div class="author">
+                                {% if comment.user == request.user %}
+                                    Вы:
+                                {% else %}
+                                    {{ comment.user.first_name }} {{ comment.user.last_name }}
+                                {% endif %}
+                            </div>
+                            <div class="created-at">
+                                {{ comment.created|date:"d.m.y H:i" }}
+                            </div>
                         </div>
-                        <div class="created-at">
-                            {{ comment.created|date:"d.m.y H:i" }}
+                        <div class="text">
+                            {{ comment.text }}
                         </div>
-                    </div>
-                    <div class="text">
-                        {{ comment.text }}
                     </div>
                 </div>
-            </div>
-        {% endfor %}
-    </div>
-{% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
 
     {% if form %}
         <div class="add-comment-cnt">
@@ -146,5 +139,6 @@
                 <button type="submit" class="button-create-order">Добавить комментарий</button>
             </form>
         </div>
+        <div class="space50"></div>
     {% endif %}
 {% endblock %}

@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
+from customer.forms import CommentForm
 from .models import Portfolio
 from .forms import PortfolioForm, BidForm
 from customer.models import Order, Bid
@@ -87,67 +88,38 @@ def place_a_bid(request, order_id):
 @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
 def order_detail(request, order_id):
     order = get_object_or_404(Order, id=order_id)
+    bid = request.user.bids.filter(order=order).first()
     if order:
-        if order.programmer is None or order.programmer == request.user:
-            return render(request, 'programmer/order_detail.html', {'order': order})
-    # else access denied
-    return redirect('programmer:order_list')
-
+        if order.programmer is None:
+            return render(request, 'programmer/order_detail.html', {'order': order, 'bid': bid})
+        elif order.programmer.id == bid.programmer.id:
+            if request.method == 'POST':
+                form = CommentForm(request.POST)
+                if form.is_valid():
+                    form.instance.order = order
+                    form.instance.user = request.user
+                    form.save()
+                    form = CommentForm()
+            else:
+                form = CommentForm()
+            comments = order.comments.all()
+            return render(request, 'programmer/order_detail.html',
+                          {'order': order, 'bid': bid, 'form': form, 'comments': comments})
+        # else access denied
+        return redirect('programmer:order_list')
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
 def my_orders(request):
     orders = Order.objects.filter(programmer=request.user).order_by('-taken')
-    return render(request, 'programmer/my_orders.html', {'orders': orders})
+    bids = Bid.objects.filter(programmer=request.user).order_by('status')
+    return render(request, 'programmer/my_orders.html', {'orders': orders, 'bids': bids})
 
 
-# @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
-# def take_order(request):
-#     order_id = request.POST.get('order_id')
-#     order = get_object_or_404(Order, id=order_id)
-#
-#     # Проверка, чтобы нельзя было взять заказ, если он уже взят другим программистом
-#     if order.programmer_id is not None:
-#         return HttpResponseForbidden("Этот заказ уже взят")
-#
-#     # Установка programmer_id на ваш идентификатор пользователя
-#     order.programmer_id = request.user.id
-#     order.taken = timezone.now()
-#     order.save()
-#     orders = Order.objects.filter(programmer_id=request.user.id)
-#     return render(request, 'programmer/taken-orders.html', {'orders': orders})
-#
-#
-# @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
-# def delete_order(request):
-#     order_id = request.POST.get('order_id')
-#     order = get_object_or_404(Order, id=order_id)
-#
-#     # Проверка если заказ взят программистом
-#     if order.programmer_id:
-#         order.programmer_id = None
-#         order.taken = None
-#         order.save()
-#
-#     orders = Order.objects.filter(programmer_id=request.user.id)
-#     return render(request, 'programmer/taken-orders.html', {'orders': orders})
-#
-#
 # @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
 # def news_view(request):
 #     news = News.objects.filter().order_by('-published')
 #     return render(request, 'programmer/news_view.html', {'news': news})
-#
-#
-# @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
-# def taken_orders(request):
-#     orders = Order.objects.filter(programmer_id=request.user.id)
-#     return render(request, 'programmer/taken-orders.html', {'orders': orders})
-#
-#
-# @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
-# def contacts(request):
-#     return render(request, 'programmer/contacts.html')
 #
 #
 # @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
