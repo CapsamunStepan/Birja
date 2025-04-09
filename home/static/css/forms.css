@@ -1,4 +1,4 @@
-.create-order-cnt, .create-portfolio-cnt {
+.create-order-cnt, .create-portfolio-cnt, .add-comment-cnt {
     display: flex;
     justify-content: center;
     /*margin: 30px;*/
@@ -95,7 +95,7 @@
 
 #id_full_description,
 #id_introduction, #id_education_or_courses, #id_qualities, #id_skills,
-#id_description {
+#id_description, #id_text {
     width: 400px;
     height: 75px;
     border: none;
@@ -123,7 +123,8 @@
 
 #id_title:focus, #id_full_description:focus, #id_price:focus, #id_category:focus, #id_deadline:focus,
 #id_github:focus, #id_introduction:focus, #id_education_or_courses:focus, #id_qualities:focus, #id_skills:focus,
-#id_description:focus {
+#id_description:focus,
+#id_text:focus {
     outline: none;
 }
 

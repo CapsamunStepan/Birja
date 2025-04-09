@@ -25,22 +25,20 @@
                 {% if order.deadline %}
                     <div class="deadline">Выполнить до: {{ order.deadline }}</div>
                 {% endif %}
-                {% if order.programmer %}
-                    <div class="programmer">{{ order.programmer }}</div>
-                {% endif %}
+                <div class="programmer">Заказчик: {{ order.author.first_name }} {{ order.author.last_name }}</div>
                 {% if order.taken %}
-                    <div class="taken">{{ order.taken }}</div>
+                    <div class="taken">Одобрено: {{ order.taken }}</div>
                 {% endif %}
             </div>
         </div>
-{#        <form action="{% url 'customer:order_edit' order.id %}">#}
-{#            <button type="submit">Редактировать</button>#}
-{#        </form>#}
-{##}
-{#        <form action="{% url 'customer:order_delete' order.id %}" method="post">#}
-{#            {% csrf_token %}#}
-{#            <button type="submit">Удалить</button>#}
-{#        </form>#}
+        {#        <form action="{% url 'customer:order_edit' order.id %}">#}
+        {#            <button type="submit">Редактировать</button>#}
+        {#        </form>#}
+        {##}
+        {#        <form action="{% url 'customer:order_delete' order.id %}" method="post">#}
+        {#            {% csrf_token %}#}
+        {#            <button type="submit">Удалить</button>#}
+        {#        </form>#}
 
 
         {% if bids %}

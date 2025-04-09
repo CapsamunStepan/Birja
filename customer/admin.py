@@ -11,3 +11,8 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(Bid)
 class BidAdmin(admin.ModelAdmin):
     list_display = ('order', 'description', 'programmer', 'status', 'created_at')
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('order', 'user', 'text', 'created')

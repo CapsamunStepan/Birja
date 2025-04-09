@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from programmer.models import Portfolio
 from .models import Order, Bid, Comment
-from .forms import OrderForm
+from .forms import OrderForm, CommentForm
 from django.core.paginator import Paginator
 
 
@@ -49,16 +49,25 @@ def order_create(request):
 
 @user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
 def order_detail(request, order_id):
-    order = Order.objects.get(id=order_id)
+    form = None
+    order = get_object_or_404(Order, id=order_id)
     if order.author == request.user:
         if not order.programmer:
             bids = order.bids.all()
-            comments = None
         else:
-            comments = order.comments.all()
             bids = None
+            if request.method == 'POST':
+                form = CommentForm(request.POST)
+                if form.is_valid():
+                    form.instance.order = order
+                    form.instance.user = request.user
+                    form.save()
+                    form = CommentForm()
+            else:
+                form = CommentForm()
+        comments = order.comments.all()
         return render(request, 'customer/order_detail.html',
-                      {"order": order, "bids": bids, "comments": comments})
+                      {"order": order, "bids": bids, "comments": comments, "form": form})
     else:
         # access denied
         return redirect('customer:order_list')

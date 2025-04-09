@@ -86,11 +86,13 @@ def place_a_bid(request, order_id):
 
 @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
 def order_detail(request, order_id):
-    order = get_object_or_404(Order, id=order_id, programmer=None)
-    if not order:
-        return redirect('programmer:order_list')
-    else:
-        return render(request, 'programmer/order_detail.html', {'order': order})
+    order = get_object_or_404(Order, id=order_id)
+    if order:
+        if order.programmer is None or order.programmer == request.user:
+            return render(request, 'programmer/order_detail.html', {'order': order})
+    # else access denied
+    return redirect('programmer:order_list')
+
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
