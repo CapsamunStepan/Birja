@@ -52,7 +52,7 @@ class Bid(models.Model):
     def accept(self):
         self.status = 'accepted'
         self.save()
-        self.order.programmer = self.programmer  # Назначаем программиста
+        self.order.programmer = self.programmer
         self.order.taken = timezone.now()
         self.order.save()
         # отклонение остальных заявок
