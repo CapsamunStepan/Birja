@@ -4,8 +4,14 @@ from .models import Order
 
 
 class OrderForm(forms.ModelForm):
-    deadline = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    deadline = forms.DateField(
+        required=False,
+        widget=forms.DateInput(attrs={
+            'type': 'date',
+        })
+    )
     price = forms.IntegerField(
+        required=False,
         widget=forms.NumberInput(attrs={
             'placeholder': "0",
             'min': 0,

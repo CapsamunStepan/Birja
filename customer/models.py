@@ -20,7 +20,7 @@ class Order(models.Model):
     ]
     title = models.CharField(max_length=250)
     full_description = models.TextField()
-    price = models.IntegerField(default=0)
+    price = models.IntegerField(default=0, null=True, blank=True)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='customer_orders')
     programmer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -50,14 +50,17 @@ class Bid(models.Model):
         return f"Заявка пользователя {self.programmer} на заказ {self.order}"
 
     def accept(self):
-        # Принять заявку и отклонить остальные
         self.status = 'accepted'
         self.save()
         self.order.programmer = self.programmer  # Назначаем программиста
         self.order.taken = timezone.now()
         self.order.save()
-
+        # отклонение остальных заявок
         Bid.objects.filter(order=self.order).exclude(id=self.id).update(status='rejected')
+
+    def reject(self):
+        self.status = 'rejected'
+        self.save()
 
 
 class Comment(models.Model):

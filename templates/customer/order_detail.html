@@ -36,7 +36,8 @@
                     <div class="deadline">Выполнить до: {{ order.deadline }}</div>
                 {% endif %}
                 {% if order.programmer %}
-                    <div class="programmer">Выполняет: {{ order.programmer.first_name }} {{ order.programmer.last_name }}</div>
+                    <div class="programmer">
+                        Выполняет: {{ order.programmer.first_name }} {{ order.programmer.last_name }}</div>
                 {% endif %}
                 {% if order.taken %}
                     <div class="taken">{{ order.taken }}</div>
@@ -48,25 +49,28 @@
         <div class="bids">
             <h3>Заявки:</h3>
             {% for bid in bids %}
-                <div class="bid-cnt">
-                    <div class="bid-cnt-inner">
-                        <div class="left-part">
-                            <a href="{% url 'customer:programmer_portfolio' bid.programmer %}">{{ bid.programmer.first_name }} {{ bid.programmer.last_name }}</a>
-                            <div class="created-at">{{ bid.created_at }}</div>
-                        </div>
-                        <div class="buttons">
-                            <form action="{% url 'customer:accept_bid' bid.id %}" method="post">
-                                {% csrf_token %}
-                                <button type="submit" class="accept-button" style="margin: 0">Принять</button>
-                            </form>
+                {% if bid.status == 'pending' %}
+                    <div class="bid-cnt">
+                        <div class="bid-cnt-inner">
+                            <div class="left-part">
+                                <a href="{% url 'customer:programmer_portfolio' bid.programmer %}">{{ bid.programmer.first_name }} {{ bid.programmer.last_name }}</a>
+                                <div class="created-at">{{ bid.created_at }}</div>
+                            </div>
+                            <div class="buttons">
+                                <form action="{% url 'customer:accept_bid' bid.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="accept-button" style="margin: 0">Принять</button>
+                                </form>
 
-                            <form action="{% url 'customer:order_delete' order.id %}" method="post">
-                                {% csrf_token %}
-                                <button type="submit" class="delete-order-button" style="margin: 0">Отклонить</button>
-                            </form>
+                                <form action="{% url 'customer:reject_bid' bid.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="delete-order-button" style="margin: 0">Отклонить
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
+                {% endif %}
             {% endfor %}
         </div>
     {% elif not order.programmer %}

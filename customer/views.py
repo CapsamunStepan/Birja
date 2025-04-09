@@ -105,3 +105,15 @@ def accept_bid(request, bid_id):
     else:
         # access denied
         return HttpResponse("Access denied")
+
+
+@user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
+def reject_bid(request, bid_id):
+    bid = get_object_or_404(Bid, id=bid_id)
+    if bid.order.author == request.user:
+        if request.method == 'POST':
+            bid.reject()
+        return redirect('customer:order_detail', order_id=bid.order.id)
+    else:
+        # access denied
+        return HttpResponse("Access denied")
