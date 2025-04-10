@@ -16,7 +16,7 @@ class Portfolio(models.Model):
     skills = models.TextField()
 
     def __str__(self):
-        return 'Portfolio of' + self.user.first_name + " " + self.user.last_name
+        return 'Портфолио пользователя ' + self.user.first_name + " " + self.user.last_name
 
 
 class CategorySubscription(models.Model):
