@@ -60,6 +60,7 @@
 
         <!-- Кнопка входа -->
         <button type="submit" class="button-submit">Войти</button>
+        <input type="hidden" name="next" value="{{ request.GET.next }}" />
 
         <p class="p">Нет аккаунта? 
             <span class="span"><a href="{% url 'home:register' %}">Зарегистрироваться</a></span>

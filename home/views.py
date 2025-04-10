@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, UserRegistrationForm
 from django.contrib.auth.models import Group
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 
 # Create your views here.
@@ -26,7 +26,8 @@ def registration(request):
             group_id = user_form.cleaned_data['group'].id
             group = Group.objects.get(pk=group_id)
             group.user_set.add(new_user)
-            return render(request, 'home/home.html', {'new_user': new_user})  # guess it isn't save
+            login(request, new_user)
+            return redirect(to='home:home')
     else:
         user_form = UserRegistrationForm()
     return render(request, 'home/registration.html', {'user_form': user_form})
@@ -40,6 +41,9 @@ def authentication(request):
             user = authenticate(request,
                                 username=cd['username'],
                                 password=cd['password'])
+            next_url = request.POST.get('next', '')  # Получаем параметр next, если он есть
+            if next_url:
+                return HttpResponseRedirect(next_url)
             if user is not None:
                 if user.is_active:
                     login(request, user)
