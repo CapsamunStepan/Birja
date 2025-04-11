@@ -2,11 +2,13 @@ import requests
 
 
 # send messages in tg
-def send_telegram_notification(message, chat_id, bot_token):
+def send_telegram_notification(message, chat_id, bot_token, parse_mode):
     url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
-    params = {
+    data = {
         'chat_id': chat_id,
         'text': message,
+        'parse_mode': parse_mode,  # позволяет распознавать HTML & Markdown
+        # 'disable_web_page_preview': True  # без этого ссылка прогружается и появляется небольшая панель
     }
-    response = requests.get(url, params=params)
+    response = requests.post(url, data=data)
     return response.json()

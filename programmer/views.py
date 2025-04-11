@@ -8,12 +8,18 @@ from customer.models import Order, Bid
 
 @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
 def home(request):
+    link = ''
     portfolio = Portfolio.objects.filter(user_id=request.user.id).first()
     has_portfolio = portfolio is not None
+    if portfolio:
+        token = portfolio.telegram_link_token
+        if not token:
+            token = portfolio.generate_telegram_token()
+        link = f"https://t.me/it_birja_bot?start={token}"
     return render(
         request,
         'programmer/home.html',
-        {'has_portfolio': has_portfolio}
+        {'has_portfolio': has_portfolio, "link": link},
     )
 
 

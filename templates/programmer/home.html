@@ -20,6 +20,24 @@
                 </div>
             </div>
         {% else %}
+            {% if not user.telegram.telegram_id %}
+                <div class="centered" style="margin-top: 120px;">
+                    <div class="info-text">
+                        Чтобы получать уведомления о новых заказах,<br>подключите Telegram
+                    </div>
+                </div>
+                <div class="centered" style="margin-top: 30px;">
+                    <div class="tg-btn-cnt">
+                        <a href="{{ link }}" class="telegram-btn" target="_blank">
+                            <i class="fab fa-telegram-plane"></i>
+                            Привязать Telegram
+                        </a>
+                    </div>
+                </div>
+                {% else %}
+                подпишитесь на ваши любимые категории заказов
+            {% endif %}
+
         {% endif %}
     {% endif %}
 {% endblock %}

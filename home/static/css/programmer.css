@@ -113,3 +113,37 @@
     }
 }
 
+
+.telegram-btn {
+    background-color: #0088cc;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3);
+    transition: background 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+}
+
+.telegram-btn i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.telegram-btn:hover {
+    background-color: #007ab8;
+    transform: translateY(-2px);
+}
+
+.telegram-btn:active {
+    transform: translateY(0);
+}
+
+.tg-btn-cnt {
+    display: flex;
+}
+
