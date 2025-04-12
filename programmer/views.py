@@ -1,14 +1,16 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
 from customer.forms import CommentForm
-from .models import Portfolio
-from .forms import PortfolioForm, BidForm
+from .models import Portfolio, CategorySubscription
+from .forms import PortfolioForm, CategorySubscriptionForm, BidForm
 from customer.models import Order, Bid
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
 def home(request):
     link = ''
+    subscriptions = None
+    form = CategorySubscriptionForm(request.POST or None)
     portfolio = Portfolio.objects.filter(user_id=request.user.id).first()
     has_portfolio = portfolio is not None
     if portfolio:
@@ -16,10 +18,21 @@ def home(request):
         if not token:
             token = portfolio.generate_telegram_token()
         link = f"https://t.me/it_birja_bot?start={token}"
+        subscriptions = CategorySubscription.objects.filter(user=request.user)
+        if request.method == 'POST':
+            if form.is_valid():
+                cd = form.cleaned_data
+                if cd['category'] not in [x.category for x in subscriptions]:
+                    new_subscription = form.save(commit=False)
+                    new_subscription.user = request.user
+                    new_subscription.save()
+                    return redirect(to='programmer:programmer_home')
+                else:
+                    form.add_error('category', 'Вы уже подписаны на эту категорию.')
     return render(
         request,
         'programmer/home.html',
-        {'has_portfolio': has_portfolio, "link": link},
+        {'has_portfolio': has_portfolio, "link": link, "subscriptions": subscriptions, 'form': form},
     )
 
 
@@ -122,33 +135,19 @@ def my_orders(request):
     return render(request, 'programmer/my_orders.html', {'orders': orders, 'bids': bids})
 
 
+@user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
+def delete_subscription(request, subscription_id):
+    subscription = CategorySubscription.objects.filter(id=subscription_id).first()
+    if subscription:
+        if subscription.user == request.user:
+            if request.method == "POST":
+                subscription.delete()
+            return redirect(to='programmer:programmer_home')
+        else:
+            # access denied
+            pass
+
 # @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
 # def news_view(request):
 #     news = News.objects.filter().order_by('-published')
 #     return render(request, 'programmer/news_view.html', {'news': news})
-#
-#
-# @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
-# def view_order_detail(request, order_id):
-#     # order_id = request.POST.get('order_id')
-#     order = get_object_or_404(Order, id=order_id)
-#     if request.method == 'POST':
-#         form = CommentForm(request.POST)
-#         if 'done_button' in request.POST:
-#             order.is_done = True
-#             order.save()
-#         elif 'edit_button' in request.POST:
-#             order.is_done = False
-#             order.save()
-#         elif 'add_comm' in request.POST:
-#             if form.is_valid():
-#                 form.instance.order = order
-#                 form.instance.user = request.user
-#                 form.save()
-#                 form = CommentForm()
-#     else:
-#         form = CommentForm()
-#     comments = order.comments.all()
-#     return render(request, 'programmer/view_order_detail.html', {"order": order,
-#                                                                  "comments": comments,
-#                                                                  "form": form})

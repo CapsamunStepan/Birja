@@ -1,5 +1,5 @@
 from django import forms
-from .models import Portfolio
+from .models import Portfolio, CategorySubscription
 from customer.models import Bid
 
 
@@ -16,3 +16,9 @@ class BidForm(forms.ModelForm):
     class Meta:
         model = Bid
         fields = ['description']
+
+
+class CategorySubscriptionForm(forms.ModelForm):
+    class Meta:
+        model = CategorySubscription
+        fields = ['category']

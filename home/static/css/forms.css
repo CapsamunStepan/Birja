@@ -51,6 +51,24 @@
     align-items: center;
 }
 
+.inputCategorySubscription {
+    position: relative;
+    margin-top: 20px;
+    border: 2px solid #d1d1d1;
+}
+
+.error-category {
+    color: #f44336;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .inputForm:focus-within, .inputFormTextarea:focus-within {
     border: 2px solid #2d79f3;
 }
