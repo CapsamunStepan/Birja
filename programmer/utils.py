@@ -1,4 +1,5 @@
 import requests
+import certifi
 
 
 # send messages in tg
@@ -10,5 +11,5 @@ def send_telegram_notification(message, chat_id, bot_token, parse_mode):
         'parse_mode': parse_mode,  # позволяет распознавать HTML & Markdown
         # 'disable_web_page_preview': True  # без этого ссылка прогружается и появляется небольшая панель
     }
-    response = requests.post(url, data=data)
+    response = requests.post(url, data=data, verify=certifi.where())
     return response.json()
