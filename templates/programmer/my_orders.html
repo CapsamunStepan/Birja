@@ -8,6 +8,14 @@
 
 {% block content %}
     <h1>Заказы</h1>
+    <div class="sorting">
+        <span>Сортировать:</span>
+        <a href="?sort=deadline" class="{% if current_sort == 'deadline' %}active{% endif %}">Дедлайн ↑</a>
+        <a href="?sort=deadline_desc" class="{% if current_sort == 'deadline_desc' %}active{% endif %}">Дедлайн ↓</a>
+        <a href="?sort=price" class="{% if current_sort == 'price' %}active{% endif %}">Цена ↑</a>
+        <a href="?sort=price_desc" class="{% if current_sort == 'price_desc' %}active{% endif %}">Цена ↓</a>
+    </div>
+
     {% for order in orders %}
         <a href="{% url 'programmer:order_detail' order.id %}" class="order-link">
             <div class="order-cnt-outer">
@@ -53,20 +61,23 @@
                         <div class="buttons">
                             {% if bid.status == 'pending' %}
                                 <div class="pending-info">В ожидании</div>
-                                <form action="#" method="post" style="display: flex; align-items: center">
+                                <form action="{% url 'programmer:delete_bid' bid.id %}" method="post"
+                                      style="display: flex; align-items: center">
                                     {% csrf_token %}
                                     <button type="submit" class="edit-order-button" style="margin: 0">Отменить заявку
                                     </button>
                                 </form>
                             {% elif bid.status == 'accepted' %}
                                 <div class="accepted-info">Принято</div>
-                                <form action="#" method="post" style="display: flex; align-items: center">
+                                <form action="{% url 'programmer:delete_bid' bid.id %}" method="post"
+                                      style="display: flex; align-items: center">
                                     {% csrf_token %}
                                     <button type="submit" class="accept-button" style="margin: 0">Убрать заявку</button>
                                 </form>
                             {% else %}
                                 <div class="rejected-info">Отклонено</div>
-                                <form action="#" method="post" style="display: flex; align-items: center">
+                                <form action="{% url 'programmer:delete_bid' bid.id %}" method="post"
+                                      style="display: flex; align-items: center">
                                     {% csrf_token %}
                                     <button type="submit" class="delete-order-button" style="margin: 0">Удалить заявку
                                     </button>

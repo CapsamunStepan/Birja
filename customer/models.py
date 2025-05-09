@@ -29,6 +29,9 @@ class Order(models.Model):
     updated = models.DateTimeField(auto_now=True)
     taken = models.DateTimeField(null=True, blank=True)
     deadline = models.DateField(null=True, blank=True)
+    is_finished = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False)
+    is_rated = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.title}, {self.author.first_name}"
@@ -45,6 +48,11 @@ class Bid(models.Model):
     programmer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bids')
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = (('order', 'programmer'),)
+        verbose_name = "bid"
+        verbose_name_plural = "bids"
 
     def __str__(self):
         return f"Заявка пользователя {self.programmer} на заказ {self.order}"
