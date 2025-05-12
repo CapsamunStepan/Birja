@@ -28,7 +28,8 @@
                             <div class="deadline">Выполнить до: {{ order.deadline }}</div>
                         {% endif %}
                         {% if order.programmer %}
-                            <div class="programmer">Выполняет: {{ order.programmer.first_name }} {{ order.programmer.last_name }}</div>
+                            <div class="programmer">
+                                Выполняет: {{ order.programmer.first_name }} {{ order.programmer.last_name }}</div>
                         {% endif %}
                         {% if order.taken %}
                             <div class="taken">Приступил: {{ order.taken }}</div>
@@ -56,5 +57,5 @@
             <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
         {% endif %}
     </span>
-</div>
+    </div>
 {% endblock %}

@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import user_passes_test
+from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from programmer.models import Portfolio
-from .models import Order, Bid, Comment
+from .models import Order, Bid
 from .forms import OrderForm, CommentForm
 from django.core.paginator import Paginator
 
@@ -126,3 +127,22 @@ def reject_bid(request, bid_id):
     else:
         # access denied
         return HttpResponse("Access denied")
+
+
+@user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
+@require_POST
+def approve_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id, author=request.user)
+    order.is_approved = True
+    order.save()
+    return redirect('customer:order_detail', order_id=order_id)
+
+
+@user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
+@require_POST
+def reject_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id, author=request.user)
+    order.is_rejected = True
+    order.is_finished = False
+    order.save()
+    return redirect('customer:order_detail', order_id=order_id)

@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Детали заказа</h1>
+    <h2>Детали заказа</h2>
     <div class="order-detail-cnt">
         <div class="order-full-info">
             <div class="left">
@@ -21,21 +21,30 @@
                     {% else %}
                         <form action="{% url 'programmer:place_a_bid' order.id %}" method="post">
                             {% csrf_token %}
-                            {#                            <div class="flex-column">#}
-                            {#                                <label for="{{ form.description.id_for_label }}">Мотивационные слова:</label>#}
-                            {#                            </div>#}
-                            {#                            <div class="inputFormTextarea" style="max-width: 400px">#}
-                            {#                                {{ form.description }}#}
-                            {#                                {% if form.description.errors %}#}
-                            {#                                    <div class="error">{{ form.description.errors }}</div>#}
-                            {#                                {% endif %}#}
-                            {#                            </div>#}
-
                             <button type="submit" class="button-create-order" style="max-width: 250px">Отправить
                                 заявку
                             </button>
                         </form>
                     {% endif %}
+                {% elif order.is_rejected %}
+                    <p style="color: red; margin-top: 15px;">Заказ нуждается в доработке</p>
+                    <form action="{% url 'programmer:finish_order' order.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="button-create-order" style="max-width: 250px">Уведомить о
+                            завершении
+                        </button>
+                    </form>
+                {% elif order.is_approved %}
+                    <p style="color: green; margin-top: 15px;">Заказ проверен ✔️</p>
+                {% elif order.is_finished %}
+                    <p style="color: #ffcc00; margin-top: 15px;">Заказ завершен, ожидание проверки 🕐</p>
+                {% elif not order.is_finished %}
+                    <form action="{% url 'programmer:finish_order' order.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="button-create-order" style="max-width: 250px">Уведомить о
+                            завершении
+                        </button>
+                    </form>
                 {% endif %}
             </div>
             <div class="right">
@@ -49,7 +58,7 @@
                 {% endif %}
                 <div class="programmer">Заказчик: {{ order.author.first_name }} {{ order.author.last_name }}</div>
                 {% if order.taken %}
-                    <div class="taken">Одобрено: {{ order.taken }}</div>
+                    <div class="taken">Начато: {{ order.taken }}</div>
                 {% endif %}
             </div>
         </div>

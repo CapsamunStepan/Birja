@@ -15,16 +15,38 @@
                 <div class="category">{{ order.get_category_display }}</div>
                 <div class="created">{{ order.created }}</div>
                 <div class="full-description-all-lines">{{ order.full_description }}</div>
-                <div class="buttons">
-                    <form action="{% url 'customer:order_edit' order.id %}">
-                        <button type="submit" class="edit-order-button">Редактировать</button>
-                    </form>
+                {% if not order.programmer %}
+                    <div class="buttons">
+                        <form action="{% url 'customer:order_edit' order.id %}">
+                            <button type="submit" class="edit-order-button">Редактировать</button>
+                        </form>
 
-                    <form action="{% url 'customer:order_delete' order.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="delete-order-button">Удалить</button>
-                    </form>
-                </div>
+                        <form action="{% url 'customer:order_delete' order.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-order-button">Удалить</button>
+                        </form>
+                    </div>
+
+                {% else %}
+                    {% if order.is_rejected %}
+                        <p style="color: red; margin-top: 15px;">Заказ отправлен на доработку</p>
+                    {% elif order.is_approved %}
+                        <p style="color: green; margin-top: 15px;">Заказ проверен ✔️</p>
+                    {% elif order.is_finished %}
+                        <p style="color: #ffcc00; margin-top: 15px;">Заказ завершен, ожидание проверки 🕐</p>
+                        <div class="buttons">
+                            <form action="{% url 'customer:approve_order' order.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="accept-button">Одобрить</button>
+                            </form>
+
+                            <form action="{% url 'customer:reject_order' order.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="delete-order-button">На доработку</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                {% endif %}
             </div>
             <div class="right">
                 {% if order.price %}

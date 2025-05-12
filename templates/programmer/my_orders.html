@@ -7,13 +7,13 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Заказы</h1>
+    <h2>Заказы</h2>
     <div class="sorting">
-        <span>Сортировать:</span>
-        <a href="?sort=deadline" class="{% if current_sort == 'deadline' %}active{% endif %}">Дедлайн ↑</a>
-        <a href="?sort=deadline_desc" class="{% if current_sort == 'deadline_desc' %}active{% endif %}">Дедлайн ↓</a>
-        <a href="?sort=price" class="{% if current_sort == 'price' %}active{% endif %}">Цена ↑</a>
-        <a href="?sort=price_desc" class="{% if current_sort == 'price_desc' %}active{% endif %}">Цена ↓</a>
+        <span>Сортировка по:</span>
+        <a href="?sort=deadline" class="{% if current_sort == 'deadline' %}active{% endif %}">Дедлайну ↑</a>
+        <a href="?sort=deadline_desc" class="{% if current_sort == 'deadline_desc' %}active{% endif %}">Дедлайну ↓</a>
+        <a href="?sort=price" class="{% if current_sort == 'price' %}active{% endif %}">Цене ↑</a>
+        <a href="?sort=price_desc" class="{% if current_sort == 'price_desc' %}active{% endif %}">Цене ↓</a>
     </div>
 
     {% for order in orders %}

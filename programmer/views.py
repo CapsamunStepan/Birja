@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
-
 from customer.forms import CommentForm
 from .models import Portfolio, CategorySubscription
 from .forms import PortfolioForm, CategorySubscriptionForm, BidForm
 from customer.models import Order, Bid
+from django.core.paginator import Paginator
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
@@ -83,11 +83,38 @@ def edit_portfolio(request):
 
 @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
 def order_list(request):
-    orders = Order.objects.filter(programmer=None).order_by('-created')
-    form = BidForm()
+    sort = request.GET.get('sort', 'deadline')
+    filter_type = request.GET.get('filter', 'all')
+
+    allowed_sorts = {
+        'deadline': 'deadline',
+        'deadline_desc': '-deadline',
+        'price': 'price',
+        'price_desc': '-price',
+    }
+    sort_field = allowed_sorts.get(sort, 'deadline')
+    orders = Order.objects.filter(programmer=None)
     user_bids = Bid.objects.filter(programmer=request.user).values_list('order_id', flat=True)
-    return render(request, 'programmer/order_list.html',
-                  {'orders': orders, 'form': form, 'user_bids': user_bids})
+
+    if filter_type == 'new':
+        orders = orders.exclude(id__in=user_bids)
+    elif filter_type == 'submitted':
+        orders = orders.filter(id__in=user_bids)
+
+    orders = orders.order_by(sort_field)
+    paginator = Paginator(orders, per_page=5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    form = BidForm()
+
+    return render(request, 'programmer/order_list.html', {
+        'orders': orders,
+        'form': form,
+        'user_bids': user_bids,
+        'current_sort': sort,
+        'current_filter': filter_type,
+        'page_obj': page_obj,
+    })
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
@@ -172,6 +199,15 @@ def delete_bid(request, bid_id):
     bid.delete()
     return redirect(to='programmer:my_orders')
 
+
+@user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
+@require_POST
+def finish_order(request, order_id):
+    order = get_object_or_404(Order, id=order_id, programmer=request.user)
+    order.is_finished = True
+    order.is_rejected = False
+    order.save()
+    return redirect(to='programmer:order_detail', order_id=order_id)
 
 # @user_passes_test(lambda u: u.groups.filter(name='Программист').exists())
 # def news_view(request):

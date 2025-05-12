@@ -7,8 +7,27 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Заказы</h1>
-    {% for order in orders %}
+    <h2>Заказы</h2>
+    <div class="sorting">
+        <span>Сортировка по:</span>
+        <a href="?sort=deadline&filter={{ current_filter }}"
+           class="{% if current_sort == 'deadline' %}active{% endif %}">Дедлайну ↑</a>
+        <a href="?sort=deadline_desc&filter={{ current_filter }}"
+           class="{% if current_sort == 'deadline_desc' %}active{% endif %}">Дедлайну ↓</a>
+        <a href="?sort=price&filter={{ current_filter }}" class="{% if current_sort == 'price' %}active{% endif %}">Цене
+            ↑</a>
+        <a href="?sort=price_desc&filter={{ current_filter }}"
+           class="{% if current_sort == 'price_desc' %}active{% endif %}">Цене ↓</a>
+    
+        <span style="margin-left: 320px;">Фильтрация:</span>
+        <a href="?sort={{ current_sort }}&filter=all" class="{% if current_filter == 'all' %}active{% endif %}">Все</a>
+        <a href="?sort={{ current_sort }}&filter=new"
+           class="{% if current_filter == 'new' %}active{% endif %}">Новые</a>
+        <a href="?sort={{ current_sort }}&filter=submitted"
+           class="{% if current_filter == 'submitted' %}active{% endif %}">С поданной заявкой</a>
+
+    </div>
+    {% for order in page_obj %}
         <a href="{% url 'programmer:order_detail' order.id %}" class="order-link">
             <div class="order-cnt-outer">
                 <div class="order-cnt-inner">
@@ -20,16 +39,6 @@
                         {% if order.id not in user_bids %}
                             <form action="{% url 'programmer:place_a_bid' order.id %}" method="post">
                                 {% csrf_token %}
-                                {#                            <div class="flex-column">#}
-                                {#                                <label for="{{ form.description.id_for_label }}">Мотивационные слова:</label>#}
-                                {#                            </div>#}
-                                {#                            <div class="inputFormTextarea" style="max-width: 400px">#}
-                                {#                                {{ form.description }}#}
-                                {#                                {% if form.description.errors %}#}
-                                {#                                    <div class="error">{{ form.description.errors }}</div>#}
-                                {#                                {% endif %}#}
-                                {#                            </div>#}
-
                                 <button type="submit" class="button-create-order" style="max-width: 250px">Отправить
                                     заявку
                                 </button>
@@ -48,11 +57,8 @@
                             <div class="deadline">Выполнить до: {{ order.deadline }}</div>
                         {% endif %}
 
-                        <div class="programmer">Заказчик: {{ order.author.first_name }} {{ order.author.last_name }}</div>
-
-                        {% if order.taken %}
-                            <div class="taken">{{ order.taken }}</div>
-                        {% endif %}
+                        <div class="programmer">
+                            Заказчик: {{ order.author.first_name }} {{ order.author.last_name }}</div>
                     </div>
                 </div>
             </div>
@@ -61,4 +67,23 @@
     {% empty %}
         <p>Не доступен ни один заказ...</p>
     {% endfor %}
+    {% if page_obj %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?sort={{ current_sort }}&filter={{ current_filter }}&page=1">1</a>
+                    <a href="?sort={{ current_sort }}&filter={{ current_filter }}&page={{ page_obj.previous_page_number }}">&lt;</a>
+                {% endif %}
+                <span class="current">
+                    Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?sort={{ current_sort }}&filter={{ current_filter }}&page={{ page_obj.next_page_number }}">&gt;</a>
+                    <a href="?sort={{ current_sort }}&filter={{ current_filter }}&page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+
 {% endblock %}

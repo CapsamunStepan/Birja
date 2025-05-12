@@ -32,6 +32,7 @@ class Order(models.Model):
     is_finished = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
     is_rated = models.BooleanField(default=False)
+    is_rejected = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.title}, {self.author.first_name}"
