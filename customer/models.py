@@ -33,6 +33,7 @@ class Order(models.Model):
     is_approved = models.BooleanField(default=False)
     is_rated = models.BooleanField(default=False)
     is_rejected = models.BooleanField(default=False)
+    # status finished, approved, rejected
 
     def __str__(self):
         return f"{self.title}, {self.author.first_name}"
@@ -80,3 +81,17 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Комментарий пользователя {self.user.username} на заказ {self.order.title}"
+
+
+class Rating(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='ratings')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="ratings")
+    value = models.IntegerField(default=0)
+
+    class Meta:
+        unique_together = (('order', 'user'),)
+        verbose_name = "rating"
+        verbose_name_plural = "ratings"
+
+    def __str__(self):
+        return f"Оценка заказа {self.order.title}"

@@ -50,7 +50,7 @@
     margin: 0;
     padding: 0;
     font-family: "Nunito", serif;
-    
+
 }
 
 header {
@@ -145,7 +145,7 @@ header a:hover {
     justify-content: center;
     padding: 30px;
     border-radius: 20px;
-    box-shadow: 0 0 19px -3px rgba(0,0,0,0.5);
+    box-shadow: 0 0 19px -3px rgba(0, 0, 0, 0.5);
 }
 
 .navigation {
@@ -155,7 +155,7 @@ header a:hover {
     justify-content: center;
     padding: 30px;
     border-radius: 20px;
-    box-shadow: 0 0 19px -3px rgba(0,0,0,0.5);
+    box-shadow: 0 0 19px -3px rgba(0, 0, 0, 0.5);
 }
 
 .pagination {
@@ -242,6 +242,77 @@ header a:hover {
         font-weight: 600;
     }
 }
+
+.left-pos {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.rating {
+    max-width: 200px;
+
+}
+
+/* From Uiverse.io by amikambs */
+.rating:not(:checked) > input {
+    position: absolute;
+    appearance: none;
+}
+
+.rating:not(:checked) > label {
+    float: right;
+    cursor: pointer;
+    font-size: 30px;
+    fill: #666;
+}
+
+.rating:not(:checked) > label > svg {
+    fill: #666; /* Set default color for SVG */
+    transition: fill 0.3s ease; /* Add a transition effect */
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+    fill: #e58e09;
+}
+
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    fill: #ff9e0b;
+}
+
+.rating > input:checked ~ label > svg {
+    fill: #ffa723; /* Set color for selected stars */
+}
+
+.rate-button {
+    /*max-width: 175px;*/
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 800;
+    height: 50px;
+    /*width: 100%;*/
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    width: 200px;
+    background-color: orange;
+    border: 1px transparent;
+
+
+}
+
+.rate-button:hover {
+    background-color: #fdcc5b;
+    transform: translate(0, -1px);
+}
+
 
 footer {
     height: 50px;

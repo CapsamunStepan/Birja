@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Заказы</h2>
+    <h2>Мои заказы</h2>
     <div class="sorting">
         <span>Сортировка по:</span>
         <a href="?sort=deadline" class="{% if current_sort == 'deadline' %}active{% endif %}">Дедлайну ↑</a>
@@ -38,7 +38,7 @@
                         <div class="programmer">
                             Заказчик: {{ order.author.first_name }} {{ order.author.last_name }}</div>
                         {% if order.taken %}
-                            <div class="taken">Одобрено: {{ order.taken }}</div>
+                            <div class="taken">Выполняется с: {{ order.taken }}</div>
                         {% endif %}
                     </div>
                 </div>

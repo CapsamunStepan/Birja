@@ -66,6 +66,7 @@ def order_detail(request, order_id):
                     form = CommentForm()
             else:
                 form = CommentForm()
+
         comments = order.comments.all()
         return render(request, 'customer/order_detail.html',
                       {"order": order, "bids": bids, "comments": comments, "form": form})
@@ -146,3 +147,10 @@ def reject_order(request, order_id):
     order.is_finished = False
     order.save()
     return redirect('customer:order_detail', order_id=order_id)
+
+
+@user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
+@require_POST
+def rate_order(request, order_id):
+    pass
+

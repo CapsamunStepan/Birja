@@ -58,7 +58,7 @@
                 {% endif %}
                 <div class="programmer">Заказчик: {{ order.author.first_name }} {{ order.author.last_name }}</div>
                 {% if order.taken %}
-                    <div class="taken">Начато: {{ order.taken }}</div>
+                    <div class="taken">Выполняется с: {{ order.taken }}</div>
                 {% endif %}
             </div>
         </div>

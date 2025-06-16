@@ -16,4 +16,5 @@ urlpatterns = [
     path('reject_bid/<int:bid_id>', views.reject_bid, name='reject_bid'),
     path('approve_order/<int:order_id>', views.approve_order, name='approve_order'),
     path('reject_order/<int:order_id>', views.reject_order, name='reject_order'),
+    path('rate/<int:order_id>', views.rate_order, name='rate_order'),
 ]
