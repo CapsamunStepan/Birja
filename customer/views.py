@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import user_passes_test
+from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from programmer.models import Portfolio
-from .models import Order, Bid
+from .models import Order, Bid, Rating
 from .forms import OrderForm, CommentForm
 from django.core.paginator import Paginator
 
@@ -20,8 +21,8 @@ def programmers_list(request):
 
 
 @user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
-def programmer_portfolio(request, user):
-    portfolio = get_object_or_404(Portfolio, user=user)
+def programmer_portfolio(request, user_id):
+    portfolio = get_object_or_404(Portfolio, user=user_id)
     return render(request, 'customer/programmer_portfolio.html', {"portfolio": portfolio})
 
 
@@ -51,6 +52,7 @@ def order_create(request):
 @user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
 def order_detail(request, order_id):
     form = None
+    rating = None
     order = get_object_or_404(Order, id=order_id)
     if order.author == request.user:
         if not order.programmer:
@@ -68,8 +70,11 @@ def order_detail(request, order_id):
                 form = CommentForm()
 
         comments = order.comments.all()
+        if order.is_rated:
+            rating = Rating.objects.filter(order_id=order_id).first()
+            rating = rating if rating else None
         return render(request, 'customer/order_detail.html',
-                      {"order": order, "bids": bids, "comments": comments, "form": form})
+                      {"order": order, "bids": bids, "comments": comments, "form": form, "rating": rating})
     else:
         # access denied
         return redirect('customer:order_list')
@@ -152,5 +157,24 @@ def reject_order(request, order_id):
 @user_passes_test(lambda u: u.groups.filter(name='Заказчик').exists())
 @require_POST
 def rate_order(request, order_id):
-    pass
+    order = Order.objects.filter(id=order_id).first()
+    if order:
+        if order.author == request.user:
+            if order.is_approved:
+                if not order.is_rated:
+                    value = request.POST.get('rate')
+                    try:
+                        value = int(value)
+                        if not (1 <= value <= 5):
+                            return JsonResponse({'error': 'Оценка должна быть от 1 до 5.'}, status=400)
+                    except (ValueError, TypeError):
+                        return JsonResponse({'error': 'Некорректное значение оценки.'}, status=400)
 
+                    created = Rating.objects.create(order=order,
+                                                    user=request.user,
+                                                    value=value)
+                    if created:
+                        order.is_rated = True
+                        order.save()
+
+                    return redirect('customer:order_detail', order_id=order_id)

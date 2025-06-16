@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Order, Comment, Bid
+from .models import Order, Comment, Bid, Rating
 
 
 # Register your models here.
@@ -16,3 +16,8 @@ class BidAdmin(admin.ModelAdmin):
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('order', 'user', 'text', 'created')
+
+
+@admin.register(Rating)
+class RatingAdmin(admin.ModelAdmin):
+    list_display = ('order', 'user', 'value')
