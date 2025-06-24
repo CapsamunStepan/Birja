@@ -8,25 +8,29 @@
 
 {% block content %}
     <h2>Заказы</h2>
-    <div class="sorting">
-        <span>Сортировка по:</span>
-        <a href="?sort=deadline&filter={{ current_filter }}"
-           class="{% if current_sort == 'deadline' %}active{% endif %}">Дедлайну ↑</a>
-        <a href="?sort=deadline_desc&filter={{ current_filter }}"
-           class="{% if current_sort == 'deadline_desc' %}active{% endif %}">Дедлайну ↓</a>
-        <a href="?sort=price&filter={{ current_filter }}" class="{% if current_sort == 'price' %}active{% endif %}">Цене
-            ↑</a>
-        <a href="?sort=price_desc&filter={{ current_filter }}"
-           class="{% if current_sort == 'price_desc' %}active{% endif %}">Цене ↓</a>
-    
-        <span style="margin-left: 320px;">Фильтрация:</span>
-        <a href="?sort={{ current_sort }}&filter=all" class="{% if current_filter == 'all' %}active{% endif %}">Все</a>
-        <a href="?sort={{ current_sort }}&filter=new"
-           class="{% if current_filter == 'new' %}active{% endif %}">Новые</a>
-        <a href="?sort={{ current_sort }}&filter=submitted"
-           class="{% if current_filter == 'submitted' %}active{% endif %}">С поданной заявкой</a>
+    {% if orders %}
+        <div class="sorting">
+            <span>Сортировка по:</span>
+            <a href="?sort=deadline&filter={{ current_filter }}"
+               class="{% if current_sort == 'deadline' %}active{% endif %}">Дедлайну ↑</a>
+            <a href="?sort=deadline_desc&filter={{ current_filter }}"
+               class="{% if current_sort == 'deadline_desc' %}active{% endif %}">Дедлайну ↓</a>
+            <a href="?sort=price&filter={{ current_filter }}" class="{% if current_sort == 'price' %}active{% endif %}">Цене
+                ↑</a>
+            <a href="?sort=price_desc&filter={{ current_filter }}"
+               class="{% if current_sort == 'price_desc' %}active{% endif %}">Цене ↓</a>
 
-    </div>
+            <span style="margin-left: 320px;">Фильтрация:</span>
+            <a href="?sort={{ current_sort }}&filter=all"
+               class="{% if current_filter == 'all' %}active{% endif %}">Все</a>
+            <a href="?sort={{ current_sort }}&filter=new"
+               class="{% if current_filter == 'new' %}active{% endif %}">Новые</a>
+            <a href="?sort={{ current_sort }}&filter=submitted"
+               class="{% if current_filter == 'submitted' %}active{% endif %}">С поданной заявкой</a>
+
+
+        </div>
+    {% endif %}
     {% for order in page_obj %}
         <a href="{% url 'programmer:order_detail' order.id %}" class="order-link">
             <div class="order-cnt-outer">
@@ -65,7 +69,7 @@
         </a>
 
     {% empty %}
-        <p>Не доступен ни один заказ...</p>
+        <p class="noone">Не доступен ни один заказ...</p>
     {% endfor %}
     {% if page_obj %}
         <div class="pagination">

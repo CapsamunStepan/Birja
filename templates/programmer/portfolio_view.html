@@ -19,7 +19,11 @@
                 </div>
                 <div class="outer-img-cnt">
                     <div class="image-container">
-                        <img src="{{ portfolio.image.url }}" alt="photo">
+                        {% if portfolio.image %}
+                            <img src="{{ portfolio.image.url }}" alt="photo"/>
+                        {% else %}
+                            <p>Изображение не загружено</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>

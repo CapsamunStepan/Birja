@@ -8,13 +8,16 @@
 
 {% block content %}
     <h2>Мои заказы</h2>
-    <div class="sorting">
-        <span>Сортировка по:</span>
-        <a href="?sort=deadline" class="{% if current_sort == 'deadline' %}active{% endif %}">Дедлайну ↑</a>
-        <a href="?sort=deadline_desc" class="{% if current_sort == 'deadline_desc' %}active{% endif %}">Дедлайну ↓</a>
-        <a href="?sort=price" class="{% if current_sort == 'price' %}active{% endif %}">Цене ↑</a>
-        <a href="?sort=price_desc" class="{% if current_sort == 'price_desc' %}active{% endif %}">Цене ↓</a>
-    </div>
+    {% if orders %}
+        <div class="sorting">
+            <span>Сортировка по:</span>
+            <a href="?sort=deadline" class="{% if current_sort == 'deadline' %}active{% endif %}">Дедлайну ↑</a>
+            <a href="?sort=deadline_desc" class="{% if current_sort == 'deadline_desc' %}active{% endif %}">Дедлайну
+                ↓</a>
+            <a href="?sort=price" class="{% if current_sort == 'price' %}active{% endif %}">Цене ↑</a>
+            <a href="?sort=price_desc" class="{% if current_sort == 'price_desc' %}active{% endif %}">Цене ↓</a>
+        </div>
+    {% endif %}
 
     {% for order in orders %}
         <a href="{% url 'programmer:order_detail' order.id %}" class="order-link">
@@ -46,7 +49,7 @@
         </a>
 
     {% empty %}
-        <p>Вы не выполняете ни один заказ</p>
+        <p class="noone">Вы не выполняете ни один заказ</p>
     {% endfor %}
     <div class="bids">
         {% if bids %}

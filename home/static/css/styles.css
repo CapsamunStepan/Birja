@@ -313,6 +313,10 @@ header a:hover {
     transform: translate(0, -1px);
 }
 
+.noone {
+    margin-left: 20px;
+}
+
 
 footer {
     height: 50px;

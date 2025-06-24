@@ -8,13 +8,23 @@ class LoginForm(forms.Form):
 
 
 class UserRegistrationForm(forms.ModelForm):
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+    username = forms.CharField(
+        label='Логин',
+        # widget=forms.TextInput(attrs={
+        #     'autocomplete': 'off',
+        # })
+    )
+    password = forms.CharField(
+        label='Password', widget=forms.PasswordInput(attrs={
+            'autocomplete': 'off',
+        })
+    )
     password2 = forms.CharField(label='Repeat Password', widget=forms.PasswordInput)
     group = forms.ModelChoiceField(queryset=Group.objects.all(), widget=forms.RadioSelect)
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name',  'email']
+        fields = ['username', 'first_name', 'last_name', 'email']
 
     def clean_password2(self):
         cd = self.cleaned_data
